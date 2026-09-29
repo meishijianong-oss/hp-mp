@@ -1,0 +1,3268 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>血条与蓝条：关于“累”的两种语言</title>
+<meta name="description" content="血条是身体的耐力，蓝条是心神的资源：同一个“累”字，说的其实是两件事。11 章 · 89 段 · 27 个可交互组件，单文件离线可用。">
+<meta name="theme-color" content="#0a0e13">
+<meta name="generator" content="dsh single-file build">
+<meta name="author" content="">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="血条与蓝条">
+<meta property="og:title" content="血条与蓝条：关于“累”的两种语言">
+<meta property="og:description" content="血条是身体的耐力，蓝条是心神的资源：同一个“累”字，说的其实是两件事。11 章 · 89 段 · 27 个可交互组件，单文件离线可用。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="血条与蓝条：关于“累”的两种语言">
+<meta name="twitter:description" content="血条是身体的耐力，蓝条是心神的资源：同一个“累”字，说的其实是两件事。11 章 · 89 段 · 27 个可交互组件，单文件离线可用。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e13'/%3E%3Crect x='6' y='11' width='20' height='4.5' rx='2.2' fill='%23ff7a59'/%3E%3Crect x='6' y='18' width='12' height='4.5' rx='2.2' fill='%234db1ff'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e13'/%3E%3Crect x='6' y='11' width='20' height='4.5' rx='2.2' fill='%23ff7a59'/%3E%3Crect x='6' y='18' width='12' height='4.5' rx='2.2' fill='%234db1ff'/%3E%3C/svg%3E">
+<style>
+/* ══ infra.css ══ */
+/* ══════════════════════════════════════════════════════════════
+   infra.css —— 页面骨架：主题变量 / 顶栏 / 目录 / 进度 / 双条 HUD
+   零外部依赖：不引用任何外链字体、CDN、图片
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  --font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+  --font-num: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --maxw: 1180px;
+  --col: 40rem;
+  --r: 14px;
+  --r-sm: 9px;
+
+  --hp-1: #ff7a59;
+  --hp-2: #ffb03a;
+  --mp-1: #4db1ff;
+  --mp-2: #8f7bff;
+  --track: rgba(130, 160, 195, 0.16);
+}
+
+/* ── 暗色（默认） ── */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0e13;
+  --bg-2: #0d131a;
+  --panel: rgba(18, 26, 35, 0.72);
+  --panel-2: rgba(24, 34, 45, 0.6);
+  --panel-solid: #111922;
+  --line: rgba(140, 170, 200, 0.17);
+  --line-soft: rgba(140, 170, 200, 0.09);
+  --fg: #e8eef5;
+  --fg-2: #b7c6d4;
+  --fg-3: #8296a8;
+  --accent: #7ee0c8;
+  --accent-soft: rgba(126, 224, 200, 0.13);
+  --warn: #ffb03a;
+  --shadow: 0 20px 55px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.32);
+  --glow-a: rgba(77, 177, 255, 0.13);
+  --glow-b: rgba(255, 122, 89, 0.11);
+}
+
+/* ── 亮色 ── */
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f1ea;
+  --bg-2: #faf8f4;
+  --panel: rgba(255, 255, 255, 0.8);
+  --panel-2: rgba(255, 255, 255, 0.62);
+  --panel-solid: #ffffff;
+  --line: rgba(40, 60, 80, 0.16);
+  --line-soft: rgba(40, 60, 80, 0.08);
+  --fg: #1e252c;
+  --fg-2: #3f4e5c;
+  --fg-3: #6c7c8b;
+  --accent: #1d8a74;
+  --accent-soft: rgba(29, 138, 116, 0.12);
+  --warn: #b5731a;
+  --shadow: 0 18px 44px rgba(60, 70, 85, 0.16);
+  --shadow-sm: 0 5px 16px rgba(60, 70, 85, 0.1);
+  --glow-a: rgba(47, 127, 214, 0.1);
+  --glow-b: rgba(226, 87, 60, 0.08);
+  --hp-1: #e2573c;
+  --hp-2: #d98a1c;
+  --mp-1: #2f7fd6;
+  --mp-2: #6a5ce0;
+  --track: rgba(40, 60, 80, 0.13);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.95;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+}
+
+/* 氛围光晕：纯 CSS radial-gradient，无位图 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(880px 620px at 14% -8%, var(--glow-a), transparent 62%),
+    radial-gradient(720px 540px at 92% 6%, var(--glow-b), transparent 62%),
+    radial-gradient(900px 700px at 50% 108%, var(--glow-a), transparent 66%);
+}
+
+.shell,
+.topbar,
+.hud,
+.progress { position: relative; z-index: 1; }
+
+a { color: inherit; }
+
+::selection { background: var(--accent-soft); }
+
+/* ── 顶部阅读进度 ── */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 40;
+  background: transparent;
+}
+.progress > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--mp-1), var(--mp-2) 46%, var(--hp-2) 74%, var(--hp-1));
+  box-shadow: 0 0 12px rgba(120, 170, 255, 0.45);
+}
+
+/* ── 顶栏 ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px max(16px, calc((100vw - var(--maxw)) / 2 + 28px));
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  border-bottom: 1px solid var(--line-soft);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fg-2);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand-bars { display: inline-flex; flex-direction: column; gap: 3px; width: 30px; }
+.brand-bars i { display: block; height: 4px; border-radius: 2px; }
+.brand-bars i:first-child { width: 26px; background: linear-gradient(90deg, var(--hp-1), var(--hp-2)); }
+.brand-bars i:last-child { width: 15px; background: linear-gradient(90deg, var(--mp-1), var(--mp-2)); }
+.topbar-spacer { flex: 1; }
+.tb-meta {
+  font-size: 0.78rem;
+  color: var(--fg-3);
+  white-space: nowrap;
+  display: none;
+}
+@media (min-width: 720px) { .tb-meta { display: block; } }
+
+.btn {
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--fg-2);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--fg); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn .ico { width: 15px; height: 15px; display: block; }
+.btn-label { white-space: nowrap; }
+#toc-btn { display: none; }
+@media (max-width: 1079px) { #toc-btn { display: inline-flex; } }
+
+/* ── 骨架 ── */
+.shell {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 34px 28px 120px;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 52px;
+  align-items: start;
+}
+
+/* ── 目录 ── */
+.toc {
+  position: sticky;
+  top: 74px;
+  max-height: calc(100vh - 108px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+}
+.toc-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--fg-3);
+  margin: 0 0 12px 12px;
+  text-transform: uppercase;
+}
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 0; }
+.toc-link {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--fg-3);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.toc-link:hover { color: var(--fg-2); background: var(--panel-2); }
+.toc-link .toc-n {
+  font-family: var(--font-num);
+  font-size: 0.72rem;
+  color: var(--fg-3);
+  min-width: 1.6em;
+}
+.toc-link.is-active {
+  color: var(--fg);
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+.toc-link.is-active .toc-n { color: var(--accent); }
+.toc-hint {
+  margin: 18px 12px 0;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  color: var(--fg-3);
+  border-top: 1px solid var(--line-soft);
+  padding-top: 12px;
+}
+kbd {
+  font-family: var(--font-num);
+  font-size: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 4px;
+  color: var(--fg-2);
+}
+
+@media (max-width: 1079px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 26px 20px 130px; }
+  .toc {
+    position: fixed;
+    top: 46px;
+    left: 0;
+    right: 0;
+    z-index: 29;
+    max-height: min(70vh, 520px);
+    padding: 16px 18px 20px;
+    background: var(--panel-solid);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    visibility: hidden;
+    transform: translateY(-104%);
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+  }
+  .toc.open { visibility: visible; transform: translateY(0); transition: transform 0.3s ease; }
+  .toc-hint { display: none; }
+}
+
+/* ── 正文列 ── */
+.doc { max-width: var(--col); width: 100%; }
+
+.hero { padding: 8px 0 6px; }
+.hero-kicker {
+  font-size: 0.74rem;
+  letter-spacing: 0.3em;
+  color: var(--fg-3);
+  margin: 0 0 16px;
+}
+.hero h1 {
+  font-size: clamp(1.75rem, 4.6vw, 2.5rem);
+  line-height: 1.34;
+  margin: 0 0 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.hero h1 .h1-b { display: block; font-size: 0.62em; font-weight: 500; color: var(--fg-2); margin-top: 10px; letter-spacing: 0.02em; }
+.hero-meta {
+  font-size: 0.8rem;
+  color: var(--fg-3);
+  margin: 0 0 26px;
+  font-family: var(--font-num);
+}
+.hero-legend { display: grid; gap: 10px; margin: 0 0 20px; }
+@media (min-width: 620px) { .hero-legend { grid-template-columns: 1fr 1fr; } }
+.lg {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 13px 15px;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+}
+.lg b { display: block; font-size: 0.9rem; margin-bottom: 4px; }
+.lg span { font-size: 0.79rem; color: var(--fg-3); line-height: 1.7; }
+.lg-hp b { color: var(--hp-1); }
+.lg-mp b { color: var(--mp-1); }
+.lg-rule { height: 3px; border-radius: 3px; margin-bottom: 9px; }
+.lg-hp .lg-rule { background: linear-gradient(90deg, var(--hp-1), var(--hp-2)); width: 82%; }
+.lg-mp .lg-rule { background: linear-gradient(90deg, var(--mp-1), var(--mp-2)); width: 54%; }
+.hero-tip {
+  font-size: 0.82rem;
+  color: var(--fg-3);
+  line-height: 1.8;
+  border-left: 2px solid var(--line);
+  padding-left: 14px;
+  margin: 0 0 10px;
+}
+
+/* ── 章节 ── */
+.chapter { padding-top: 54px; scroll-margin-top: 74px; }
+.chapter > h2 {
+  font-size: 1.32rem;
+  line-height: 1.6;
+  margin: 0 0 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+.chapter > h2 .ch-num {
+  display: block;
+  font-family: var(--font-num);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  color: var(--accent);
+  margin-bottom: 7px;
+  font-weight: 500;
+}
+p.prose { margin: 0 0 1.35em; color: var(--fg); }
+p.prose.lead { color: var(--fg); }
+p.prose:first-of-type { color: var(--fg); }
+
+.doc-foot {
+  margin-top: 70px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--fg-3);
+  line-height: 1.9;
+}
+.doc-foot b { color: var(--fg-2); font-weight: 600; }
+.doc-foot ul { margin: 10px 0 0; padding-left: 1.1em; }
+.doc-foot li { margin: 3px 0; }
+
+/* ── 入场动画（JS 未执行时全部可见）── */
+html[data-js] .reveal { opacity: 0; transform: translateY(16px); }
+html[data-js] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+
+/* ── 右下角双条 HUD ── */
+.hud {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 35;
+  width: 258px;
+  max-width: calc(100vw - 36px);
+  padding: 12px 14px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--panel);
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: var(--shadow);
+  font-size: 0.78rem;
+}
+.hud-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+.hud-head b {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--fg-3);
+  font-weight: 500;
+  flex: 1;
+}
+.hud-btn {
+  font: inherit;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--fg-3);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+.hud-btn:hover { color: var(--fg); border-color: var(--accent); }
+.hud-row { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+.hud-k { width: 2.5em; color: var(--fg-2); font-size: 0.76rem; }
+.hud-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+.hud-track > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+.hud-track > i.hp { background: linear-gradient(90deg, var(--hp-1), var(--hp-2)); }
+.hud-track > i.mp { background: linear-gradient(90deg, var(--mp-1), var(--mp-2)); }
+.hud-v {
+  width: 2.1em;
+  text-align: right;
+  font-family: var(--font-num);
+  font-size: 0.72rem;
+  color: var(--fg-3);
+}
+.hud-note {
+  margin: 9px 0 0;
+  padding-top: 9px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: var(--fg-3);
+  min-height: 3.3em;
+}
+.hud.min .hud-note,
+.hud.min .hud-row { display: none; }
+.hud.min { width: auto; }
+.hud.min .hud-head { margin-bottom: 0; }
+
+@media (max-width: 560px) {
+  .hud { right: 12px; bottom: 12px; width: calc(100vw - 24px); }
+  .hud-note { min-height: 0; }
+  .hud-btn { padding: 6px 10px; font-size: 0.75rem; }
+  .topbar { padding: 9px 14px; }
+  .topbar .btn { padding: 8px 14px; }
+  .toc-link { padding: 9px 12px; }
+}
+
+/* ── 降级：尊重 reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html[data-js] .reveal { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media print {
+  .toc, .hud, .progress, .topbar { display: none; }
+  body { background: #fff; color: #000; }
+  .shell { display: block; padding: 0; }
+}
+
+/* ══ comp.css ══ */
+/* ══════════════════════════════════════════════════════════════
+   comp.css —— 交互组件样式（与 comp/*.html 的类名一一对应）
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 组件外壳 ── */
+.cp {
+  margin: 34px 0 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px) saturate(1.05);
+  overflow: hidden;
+}
+.cp-cap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  background: linear-gradient(90deg, var(--accent-soft), transparent 70%);
+}
+.cp-cap b {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  font-weight: 650;
+}
+.cp-cap span { font-size: 0.78rem; color: var(--fg-3); }
+.cp-body { padding: 16px 18px 18px; }
+.cp-body > *:first-child { margin-top: 0; }
+
+.cp-lede {
+  font-size: 0.87rem;
+  line-height: 1.85;
+  color: var(--fg-2);
+  margin: 0 0 14px;
+}
+.cp-out {
+  font-size: 0.84rem;
+  line-height: 1.8;
+  color: var(--fg);
+  background: var(--panel-2);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 9px 13px;
+  margin: 14px 0 0;
+}
+.cp-scene {
+  font-size: 0.84rem;
+  line-height: 1.8;
+  color: var(--fg-2);
+  margin: 14px 0 0;
+  padding-left: 13px;
+  border-left: 2px solid var(--line);
+}
+.cp-note {
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--fg-3);
+  margin: 12px 0 0;
+}
+.cp-note::before { content: "◈ "; color: var(--fg-3); }
+.cp-lab-line {
+  font-size: 0.8rem;
+  color: var(--fg-3);
+  margin: 18px 0 8px;
+}
+.cp-quote {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  background: var(--panel-2);
+}
+.cp-quote p { margin: 0 0 7px; font-size: 0.87rem; line-height: 1.8; }
+.cp-quote p:last-child { margin-bottom: 0; }
+.cp-quote .mini { font-size: 0.78rem; color: var(--fg-3); }
+.cp-quote-out {
+  font-size: 0.95rem;
+  border-left-width: 3px;
+  border-left-color: var(--mp-1);
+}
+
+/* ── 控件 ── */
+.cp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.cp-chips:last-child { margin-bottom: 0; }
+.chip {
+  font: inherit;
+  font-size: 0.81rem;
+  line-height: 1.5;
+  color: var(--fg-2);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  text-align: left;
+}
+.chip:hover { border-color: var(--accent); color: var(--fg); }
+.chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chip.is-on,
+.chip[aria-pressed="true"],
+.chip[aria-selected="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--fg);
+  font-weight: 550;
+}
+.chip.is-on.is-ok, .chip[data-state="ok"] { background: rgba(126, 224, 200, 0.16); border-color: var(--accent); }
+.chip[data-state="no"] { border-color: var(--hp-1); color: var(--hp-1); background: transparent; }
+
+.btn-solid, .btn-ghost, .btn-danger {
+  font: inherit;
+  font-size: 0.81rem;
+  border-radius: 999px;
+  padding: 7px 15px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s;
+}
+.btn-solid {
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+html[data-theme="light"] .btn-solid { color: #fff; }
+.btn-solid:hover { filter: brightness(1.08); }
+.btn-ghost {
+  color: var(--fg-2);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--fg); }
+.btn-danger {
+  color: var(--hp-1);
+  background: transparent;
+  border: 1px solid var(--hp-1);
+}
+.btn-danger:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-solid:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-solid:focus-visible, .btn-ghost:focus-visible, .btn-danger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.cp-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  flex-wrap: wrap;
+}
+.cp-row-btn { margin-top: 12px; gap: 12px; }
+.cp-lab {
+  font-size: 0.79rem;
+  color: var(--fg-3);
+  min-width: 8.5em;
+  flex: 0 0 auto;
+}
+.cp-mono { font-family: var(--font-num); font-size: 0.78rem; color: var(--fg-2); }
+.cp-steps-num { font-family: var(--font-num); font-size: 0.95rem; color: var(--fg); }
+
+.cp-range {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1 1 140px;
+  min-width: 120px;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.cp-range:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 999px; }
+.cp-range::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--track);
+}
+.cp-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.cp-range::-moz-range-track { height: 5px; border-radius: 999px; background: var(--track); }
+.cp-range::-moz-range-thumb { width: 13px; height: 13px; border: 2px solid var(--bg); border-radius: 50%; background: var(--accent); }
+
+/* ── 条与计量 ── */
+.cp-meters { display: grid; gap: 7px; margin: 12px 0 0; }
+.cp-meter { display: flex; align-items: center; gap: 9px; }
+.cp-mk { width: 4.6em; flex: 0 0 auto; font-size: 0.76rem; color: var(--fg-3); }
+.bar {
+  flex: 1 1 auto;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+  display: block;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--hp-1), var(--hp-2));
+  transition: width 0.5s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+.bar.mp > i { background: linear-gradient(90deg, var(--mp-1), var(--mp-2)); }
+.cp-meter > b { min-width: 2.6em; text-align: right; }
+
+/* ── 卡片 ── */
+.cp-grid2 { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.cp-grid3 { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); margin: 12px 0 0; }
+.cp-card {
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--panel-2);
+  padding: 11px 13px;
+}
+.cp-card b { display: block; font-size: 0.8rem; margin-bottom: 3px; color: var(--fg); }
+.cp-card span { font-size: 0.79rem; color: var(--fg-3); line-height: 1.75; }
+.cp-dim { opacity: 0.72; border-style: dashed; }
+.cp-big { margin: 12px 0 0; }
+.cp-big .btn-danger { font-size: 0.88rem; padding: 10px 20px; }
+
+/* ── 步骤 / 清单 ── */
+.cp-steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.cp-steps-row { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.cp-steps li { margin: 0; }
+.step {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--panel-2);
+  padding: 9px 12px;
+  cursor: pointer;
+  color: var(--fg-2);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.step:hover { border-color: var(--accent); color: var(--fg); }
+.step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.step b { font-size: 0.82rem; font-weight: 600; }
+.step .step-v { font-size: 0.76rem; color: var(--fg-3); font-family: var(--font-num); }
+.step.is-ok { border-color: var(--accent); background: var(--accent-soft); }
+.step.is-ok .step-v { color: var(--accent); }
+.step.is-no { border-color: var(--hp-1); }
+.step.is-no .step-v { color: var(--hp-1); }
+
+.cp-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.cp-list li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 0.82rem;
+  border-bottom: 1px dashed var(--line-soft);
+  padding-bottom: 7px;
+}
+.cp-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+.cp-list b { flex: 0 0 auto; font-weight: 600; color: var(--fg); min-width: 8.5em; }
+.cp-list span { color: var(--fg-3); }
+
+.cp-checks { display: grid; gap: 8px; margin: 0 0 12px; }
+.ck {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.83rem;
+  color: var(--fg-2);
+  line-height: 1.75;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ck:hover { border-color: var(--accent); }
+.ck input { margin: 5px 0 0; accent-color: var(--accent); width: 15px; height: 15px; flex: 0 0 auto; }
+.ck:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--fg); }
+
+/* ── 面板 / 标签页 ── */
+.cp-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.cp-panel[hidden] { display: none; }
+.cp-panel > *:first-child { margin-top: 0; }
+.cp-q { margin: 0 0 14px; }
+.cp-q > b { display: block; font-size: 0.84rem; margin-bottom: 8px; font-weight: 600; }
+
+/* ── 进度轨（走路） ── */
+.cp-track { display: flex; gap: 4px; margin: 6px 0 4px; }
+.cp-track > i {
+  flex: 1 1 0;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--track);
+  transition: background 0.3s, transform 0.3s;
+}
+.cp-track > i.on { background: linear-gradient(180deg, var(--accent), var(--mp-1)); }
+
+/* ── 供能堆叠条 ── */
+.cp-stack {
+  display: flex;
+  height: 26px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--track);
+  margin: 6px 0 10px;
+}
+.sg { display: block; height: 100%; transition: width 0.45s cubic-bezier(0.3, 0.8, 0.3, 1); }
+.sg-pcr { background: linear-gradient(90deg, #ff7a59, #ff9a3c); }
+.sg-gly { background: linear-gradient(90deg, #ffb03a, #ffe08a); }
+.sg-ox { background: linear-gradient(90deg, #4db1ff, #8f7bff); }
+.cp-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.lgd { font-size: 0.77rem; color: var(--fg-3); display: inline-flex; align-items: center; gap: 6px; }
+.lgd::before { content: ""; width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.lgd-pcr::before { background: #ff8a4c; }
+.lgd-gly::before { background: #ffce6a; }
+.lgd-ox::before { background: #63a8ff; }
+.lgd b { color: var(--fg); }
+
+/* ── SVG 通用 ── */
+.cp-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 4px 0 0;
+  color: var(--fg-3);
+}
+.cp-svg text { fill: var(--fg-2); font-size: 11px; font-family: var(--font-sans); text-anchor: middle; }
+.cp-svg .tick { fill: var(--fg-3); font-size: 10px; }
+.cp-svg .axis { stroke: var(--line); stroke-width: 1; }
+.cp-svg .guide { stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 4 5; }
+
+/* 家族网络 */
+.fam-nodes text { font-size: 10px; }
+.fam-lines line { stroke: var(--line); stroke-width: 1.2; }
+.fam-links line { stroke: var(--accent); stroke-opacity: 0.22; stroke-width: 1.4; stroke-dasharray: 5 5; }
+.fam-links line.hot { stroke-opacity: 0.95; stroke-width: 2; }
+.fam-hub circle { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.fam-hub text { fill: var(--fg); font-size: 20px; font-weight: 600; }
+.fam-node { cursor: pointer; }
+.fam-node circle { fill: var(--panel-2); stroke: var(--line); stroke-width: 1.2; transition: stroke 0.2s, fill 0.2s; }
+.fam-node text { font-size: 10px; }
+.fam-node:hover circle { stroke: var(--accent); }
+.fam-node.hot circle { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.fam-node:focus-visible circle { stroke: var(--accent); stroke-width: 2.5; }
+
+/* 五劳身体图 */
+.cp-svg-body { max-width: 460px; margin: 6px auto 0; }
+.labor-nodes text { font-size: 11px; }
+.body-fig circle, .body-fig line { fill: none; stroke: var(--line); stroke-width: 6; stroke-linecap: round; }
+.labor { cursor: pointer; }
+.labor circle { fill: transparent; stroke: var(--line); stroke-width: 1.4; stroke-dasharray: 3 3; }
+.labor text { font-size: 11px; text-anchor: start; }
+.labor:hover circle { stroke: var(--accent); }
+.labor.hot circle { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.labor.hot text { fill: var(--fg); }
+.labor:focus-visible circle { stroke: var(--accent); stroke-width: 2.5; }
+.labor text tspan { font-size: 9px; fill: var(--fg-3); }
+
+/* 路径对比 */
+.cp-svg-path { max-width: 520px; margin: 6px auto 0; }
+.cp-mode .pline, .cp-mode .ptree { transition: opacity 0.35s; }
+.cp-mode-linear .pline { stroke: var(--accent); stroke-width: 2.5; fill: none; }
+.cp-mode-linear .ptree { opacity: 0.12; stroke: var(--line); stroke-width: 1.4; }
+.cp-mode-tree .ptree { opacity: 1; stroke: var(--accent); stroke-width: 1.6; }
+.cp-mode-tree .pline { opacity: 0.12; stroke: var(--line); stroke-width: 1.4; fill: none; }
+.pticks circle { fill: var(--track); }
+.pticks circle.on { fill: var(--accent); }
+
+/* 疲劳曲线 */
+.cp-svg-chart polyline { fill: none; stroke: var(--hp-1); stroke-width: 2; stroke-linejoin: round; }
+
+/* 森林图 */
+.cp-svg-forest .zero { stroke: var(--line); }
+.cp-svg-forest rect { fill: var(--mp-1); opacity: 0.8; }
+.cp-svg-forest rect.orig { fill: var(--hp-1); }
+.cp-svg-forest rect.neg { fill: var(--fg-3); opacity: 0.5; }
+.cp-svg-forest .cap { font-size: 10px; text-anchor: start; fill: var(--fg-3); }
+
+/* 庖丁解牛 */
+.cp-svg-ox .ox { fill: var(--panel-2); stroke: var(--line); stroke-width: 1.4; }
+.cp-svg-ox .joints line { stroke: var(--fg-3); stroke-width: 1.2; stroke-dasharray: 3 4; opacity: 0.7; }
+.cp-svg-ox .route { fill: none; stroke-width: 2; stroke-linecap: round; }
+.cp-svg-ox .route-gap { stroke: var(--accent); }
+.cp-svg-ox .route-chop { stroke: var(--hp-1); stroke-dasharray: 6 4; }
+.cp-svg-ox .blade { fill: var(--fg); stroke: var(--accent); stroke-width: 2; }
+
+/* ── 时间线（details） ── */
+.cp-tl { list-style: none; margin: 0; padding: 0 0 0 16px; border-left: 1px solid var(--line); display: grid; gap: 8px; }
+.cp-tl li { margin: 0; position: relative; }
+.cp-tl li::before {
+  content: "";
+  position: absolute;
+  left: -21px;
+  top: 14px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+.tl { border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--panel-2); }
+.tl summary {
+  cursor: pointer;
+  padding: 9px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  font-size: 0.83rem;
+  border-radius: var(--r-sm);
+}
+.tl summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tl summary b { font-weight: 650; color: var(--fg); }
+.tl summary span { font-size: 0.77rem; color: var(--fg-3); }
+.tl[open] summary { border-bottom: 1px dashed var(--line-soft); border-radius: var(--r-sm) var(--r-sm) 0 0; }
+.tl p { margin: 0; padding: 11px 13px; font-size: 0.81rem; line-height: 1.85; color: var(--fg-2); }
+
+/* ── 记忆/选项小卡 ── */
+.cp-mem { min-height: 2.6em; }
+.cp-mem .chip { font-size: 0.79rem; }
+.cp-quiz { margin-top: 4px; }
+.cp-chips-line { margin-top: 12px; }
+
+/* ── 回蓝对话行 ── */
+.cp-lines { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.cp-lines li {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--fg-3);
+  border-left: 2px solid var(--line-soft);
+  padding-left: 12px;
+  opacity: 0.4;
+  transition: opacity 0.6s, border-color 0.6s, color 0.6s;
+}
+.cp-lines li.is-in { opacity: 1; color: var(--fg); border-left-color: var(--mp-1); }
+html:not([data-js]) .cp-lines li { opacity: 1; color: var(--fg); }
+
+/* ── 循环动效（功绩社会） ── */
+.cp-loop .cp-card { position: relative; overflow: hidden; }
+.cp-loop.spin .cp-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+  animation: cp-spin 1.1s linear;
+}
+@keyframes cp-spin {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@media (max-width: 560px) {
+  .cp-body { padding: 14px 14px 16px; }
+  .cp-cap { padding: 11px 14px; }
+  .cp-lab { min-width: 6.5em; }
+  .bar { min-width: 60px; }
+  /* 触屏点击目标：≥ 36px 高，避免手机上点不中 */
+  .chip { padding: 9px 14px; }
+  .btn-solid, .btn-ghost, .btn-danger { padding: 9px 16px; }
+  .step { padding: 11px 13px; }
+  .ck { padding: 11px 12px; }
+  .cp-steps-row { grid-template-columns: 1fr; }
+  .cp-grid3 { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+}
+
+</style>
+<script>document.documentElement.setAttribute('data-js', '1');</script>
+</head>
+<body>
+  <div class="progress" role="presentation"><i id="progress-bar"></i></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-bars" aria-hidden="true"><i></i><i></i></span>血条 / 蓝条</a>
+    <span class="topbar-spacer"></span>
+    <span class="tb-meta">11 章 · 27 个交互组件 · 离线可用</span>
+    <button class="btn" type="button" id="toc-btn" aria-expanded="false" aria-controls="toc">目录</button>
+    <button class="btn" type="button" id="theme-btn" aria-label="切换到亮色主题" title="亮色主题">
+      <svg class="ico ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"></circle><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"></path></svg>
+      <svg class="ico ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path></svg>
+      <span class="btn-label">亮色</span>
+    </button>
+  </header>
+
+  <div class="shell">
+    <nav class="toc" id="toc" aria-label="章节目录">
+      <p class="toc-title">目录</p>
+      <ul class="toc-list" id="toc-list">
+            <li><a class="toc-link" href="#s1" data-target="s1"><span class="toc-n">一</span><span>三万步之后的茶馆</span></a></li>
+            <li><a class="toc-link" href="#s2" data-target="s2"><span class="toc-n">二</span><span>一个字，两本账</span></a></li>
+            <li><a class="toc-link" href="#s3" data-target="s3"><span class="toc-n">三</span><span>血条：一具身体是怎样累的</span></a></li>
+            <li><a class="toc-link" href="#s4" data-target="s4"><span class="toc-n">四</span><span>蓝条：一个大脑是怎样累的</span></a></li>
+            <li><a class="toc-link" href="#s5" data-target="s5"><span class="toc-n">五</span><span>为什么三万步不累，一次逛街却累</span></a></li>
+            <li><a class="toc-link" href="#s6" data-target="s6"><span class="toc-n">六</span><span>两条条，并不各自为政</span></a></li>
+            <li><a class="toc-link" href="#s7" data-target="s7"><span class="toc-n">七</span><span>别把蓝条当成油箱</span></a></li>
+            <li><a class="toc-link" href="#s8" data-target="s8"><span class="toc-n">八</span><span>看不见的累：一段简短的社会史</span></a></li>
+            <li><a class="toc-link" href="#s9" data-target="s9"><span class="toc-n">九</span><span>“累”的哲学：一场关于他人的想象力</span></a></li>
+            <li><a class="toc-link" href="#s10" data-target="s10"><span class="toc-n">十</span><span>与自己的蓝条相处</span></a></li>
+            <li><a class="toc-link" href="#s11" data-target="s11"><span class="toc-n">十一</span><span>尾声：茶馆里的那杯茶</span></a></li>
+      </ul>
+      <p class="toc-hint">右下角的双条面板随阅读进度推演文中那两天。<br><kbd>←</kbd> <kbd>→</kbd> 翻章 · 右上角切换明暗主题。</p>
+    </nav>
+
+    <main class="doc">
+      <header class="hero" id="top">
+        <p class="hero-kicker">关于“累”的两种语言</p>
+        <h1>血条与蓝条：<span class="h1-b">关于“累”的两种语言</span></h1>
+        <p class="hero-meta">11 章 · 约 10,243 字 · 阅读约 23 分钟 · 27 个交互组件</p>
+        <div class="hero-legend">
+          <div class="lg lg-hp"><div class="lg-rule" aria-hidden="true"></div><b>血条</b><span>身体的耐力：是你能走多远、跑多久、扛多重。见底时信号清晰而局部，别人一看便懂。</span></div>
+          <div class="lg lg-mp"><div class="lg-rule" aria-hidden="true"></div><b>蓝条</b><span>心神的资源：是你能专注多久、决定多少事、应付多少人、同时开多少条线。见底时不流血，也不留疤。</span></div>
+        </div>
+        <p class="hero-tip">这篇文章要分开算的，就是这两本账。页面里的每个组件都从正文里长出来：拖时间轴、切标签、拉滑杆，把“我累了”背后的下半句试出来。</p>
+      </header>
+
+      <section class="chapter" id="s1" data-chapter="1" data-cn="一" data-title="三万步之后的茶馆">
+        <h2><span class="ch-num" aria-hidden="true">01</span>一、三万步之后的茶馆</h2>
+        <p class="prose" data-p="s1.1">那年秋天，我和朋友去了南方的一座古城。</p>
+        <p class="prose" data-p="s1.2">第一天，我们从早上八点一路走到晚上九点。石板路被几百年的脚步磨得发亮，雨后能照出人影。河埠头有妇人蹲着洗菜，水面漂着几片黄叶。爬满藤蔓的老墙拐进巷子，巷子深处有一家只有三张桌子的旧书店，老板趴在柜台后面打盹，我们翻了半个钟头旧书，他连眼皮都没抬一下。傍晚回程，手机的计步器停在三万一千步。我不但不觉得累，还意犹未尽，提议绕远路去看一眼夜里的江面。江上有零星的渔火，风从水面吹来，带着一点潮湿的凉意，我站在栏杆边，觉得整个人被洗得干干净净。</p>
+        <figure class="cp reveal" data-cp="c1-two-days" id="cp-c1-two-days">
+          <figcaption class="cp-cap"><b>两日对照 · 同一座城</b><span>拖动时间轴，看两天里两条条各自的走向</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择第几天">
+              <button class="chip is-on" type="button" aria-pressed="true" data-day="1" id="c1-tab-1">第一天 · 三万一千步</button>
+              <button class="chip" type="button" aria-pressed="false" data-day="2" id="c1-tab-2">第二天 · 逛街喝茶</button>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c1-time">时间</label>
+              <input class="cp-range" type="range" id="c1-time" min="8" max="21" step="1" value="8" aria-label="一天中的时刻，从早上八点到晚上九点">
+              <output class="cp-mono" id="c1-clock" for="c1-time">08:00</output>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">血条</span><span class="bar hp"><i id="c1-hp" style="width:98%"></i></span><b class="cp-mono" id="c1-hpv">98</b></div>
+              <div class="cp-meter"><span class="cp-mk">蓝条</span><span class="bar mp"><i id="c1-mp" style="width:84%"></i></span><b class="cp-mono" id="c1-mpv">84</b></div>
+              <div class="cp-meter"><span class="cp-mk">步数</span><span class="cp-mono cp-steps-num" id="c1-steps">0</span></div>
+            </div>
+            <p class="cp-scene" id="c1-scene">08:00 · 出发。石板路被几百年的脚步磨得发亮，雨后能照出人影。</p>
+            <p class="cp-out" id="c1-out" role="status">同为 08:00 —— 第一天：血条 98 · 蓝条 84；第二天：血条 80 · 蓝条 80。</p>
+            <p class="cp-note">两天走的路都不算少，可消耗的东西并不一样。这篇文章要分开算的，就是这两本账。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s1.3">第二天，我们决定“放松一点”：不赶景点，只是逛逛街，喝喝茶，买点小东西。听上去，这像是给前一天的暴走还债，一场理所应当的休养。</p>
+        <p class="prose" data-p="s1.4">可是下午三点，我坐在一间茶馆的角落里，忽然觉得整个人像被拔掉了电源。</p>
+        <p class="prose" data-p="s1.5">朋友问我晚饭想吃什么，我盯着菜单发了三分钟的呆，一个字也读不进去。那些菜名明明每一个都认识，却怎么也拼不成意思，像一堆散落的积木。耳边是邻桌的说笑声、后厨的锅铲声、门口小贩的吆喝声，它们本来只是背景，此刻却一齐涌上来，每一种声音都像在向我索要什么。</p>
+        <p class="prose" data-p="s1.6">“你昨天走了三万步都没事，今天这点路怎么就累成这样？”她半是关心，半是不解。</p>
+        <p class="prose" data-p="s1.7">我张了张嘴，想解释，却发现自己说不清楚。我不是在撒娇，也不是在找借口。我的腿几乎没有酸痛，心肺一点也不吃力，可我确实累了，累得真真切切。而最叫人难受的是，我拿不出任何证据。没有红肿的脚踝，没有急促的喘息，没有一处可以指给她看的“伤口”。</p>
+        <figure class="cp reveal" data-cp="c1-evidence" id="cp-c1-evidence">
+          <figcaption class="cp-cap"><b>举证现场</b><span>同一套检查，两种累给出完全不同的结果</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择哪一种累">
+              <button class="chip" type="button" aria-pressed="false" data-kind="hp" id="c1-ev-hp">血条见底</button>
+              <button class="chip is-on" type="button" aria-pressed="true" data-kind="mp" id="c1-ev-mp">蓝条见底</button>
+            </div>
+            <ol class="cp-steps" id="c1-ev-list">
+              <li><button class="step" type="button" data-ev="0"><b>① 能指出累在哪里吗</b><span class="step-v">待检查</span></button></li>
+              <li><button class="step" type="button" data-ev="1"><b>② 有看得见的体征吗</b><span class="step-v">待检查</span></button></li>
+              <li><button class="step" type="button" data-ev="2"><b>③ 说得清多久能恢复吗</b><span class="step-v">待检查</span></button></li>
+            </ol>
+            <button class="btn-solid" type="button" id="c1-ev-run">一次全部出示</button>
+            <p class="cp-out" id="c1-ev-out" role="status">检查 0/3 · 通过 0 · 结论：证据不足</p>
+            <p class="cp-note">血条见底自带证据：腿酸、呼吸急促，你气喘吁吁地坐下，没有人会怀疑你。蓝条见底几乎没有证据——没有红肿的脚踝，没有急促的喘息，没有一处可以指给她看的“伤口”。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s1.8">那一刻我意识到，我们用的是同一个字，说的却是两种完全不同的东西。</p>
+      </section>
+
+      <section class="chapter" id="s2" data-chapter="2" data-cn="二" data-title="一个字，两本账">
+        <h2><span class="ch-num" aria-hidden="true">02</span>二、一个字，两本账</h2>
+        <p class="prose" data-p="s2.1">后来我常想，能不能找到一个更好的说法，把这件事讲清楚。想来想去，最直观的还是游戏里的比喻：血条和蓝条。</p>
+        <p class="prose" data-p="s2.2">血条是身体的耐力，是你能走多远、跑多久、扛多重。蓝条是心神的资源，是你能专注多久、决定多少事、应付多少人、同时开多少条线。两条条各自消耗，各自恢复，长度也因人而异。</p>
+        <p class="prose" data-p="s2.3">我是那种血条很厚、蓝条偏短的人。日常跑十公里不算什么，旅行时连着几天暴走三万步也不觉得苦。可是一场需要高度投入的会议、一份要反复推敲的文件，甚至一次没有明确议程的逛街，都会让我在结束之后需要很长时间才能缓过来。</p>
+        <p class="prose" data-p="s2.4">我身边也有截然相反的人。阿远是我的老同事，一个真正的“多线程选手”：同时带三个项目，白天开会，晚上回邮件，周末还要参加读书会，一天下来眼睛依然发亮。可有一次公司组织爬山，他爬到半山腰就气喘吁吁，坐在石阶上摆手说：“你们先走，我不行了。”</p>
+        <p class="prose" data-p="s2.5">我们两个人，一个能在山路上健步如飞却在茶馆里“死机”，一个能在会议室里连轴转却在半山腰认输。可要是把我们放进同一场谈话里，就会出现一段荒诞的对白：</p>
+        <p class="prose" data-p="s2.6">“你每天跑步，怎么会累？”这是对我说的。</p>
+        <p class="prose" data-p="s2.7">“你每天做这么多事，怎么走几步路就喘了？”这是对阿远说的。</p>
+        <p class="prose" data-p="s2.8">两句话的结构一模一样：拿一条曲线上的表现，去否定另一条曲线上的体验。它们看起来像质疑，其实是词义的混淆。说话的人以为“累”是一个东西，一个可以被单一标准衡量的东西。</p>
+        <figure class="cp reveal" data-cp="c2-two-people" id="cp-c2-two-people">
+          <figcaption class="cp-cap"><b>两条曲线上的两个人</b><span>切换人物，看同一个人在不同场景里的成败如何互换</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择人物">
+              <button class="chip is-on" type="button" aria-pressed="true" data-who="me" id="c2-who-me">我 · 血条厚，蓝条偏短</button>
+              <button class="chip" type="button" aria-pressed="false" data-who="ayuan" id="c2-who-ayuan">阿远 · 多线程选手</button>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">血条</span><span class="bar hp"><i id="c2-hp" style="width:88%"></i></span><b class="cp-mono" id="c2-hpv">88</b></div>
+              <div class="cp-meter"><span class="cp-mk">蓝条</span><span class="bar mp"><i id="c2-mp" style="width:34%"></i></span><b class="cp-mono" id="c2-mpv">34</b></div>
+            </div>
+            <div class="cp-grid3">
+              <div class="cp-card"><b>山路上</b><span id="c2-sc1">连着几天暴走三万步也不觉得苦。</span></div>
+              <div class="cp-card"><b>会议室里</b><span id="c2-sc2">一场高度投入的会议之后，需要很长时间才缓过来。</span></div>
+              <div class="cp-card"><b>茶馆里</b><span id="c2-sc3">下午三点像被拔掉了电源，盯着菜单读不进去。</span></div>
+            </div>
+            <p class="cp-out" id="c2-out" role="status">当前：我。两条条的长度不同，能撑住的场合也不同。</p>
+            <div class="cp-quote">
+              <p>“你每天跑步，怎么会累？”</p>
+              <p>“你每天做这么多事，怎么走几步路就喘了？”</p>
+              <p class="mini">两句话的结构一模一样：拿一条曲线上的表现，去否定另一条曲线上的体验。</p>
+            </div>
+            <p class="cp-note">它们看起来像质疑，其实是词义的混淆——说话的人以为“累”是一个东西，一个可以被单一标准衡量的东西。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s2.9">哲学家维特根斯坦有一个著名的看法：许多困惑并不来自世界本身，而是来自我们对语言的误用。词在日常的使用中被磨得含糊，我们却误以为它们背后有一个清晰、统一的实体。他在《哲学研究》里举过一个例子：游戏。棋类、纸牌、球赛、孩子们的过家家，你想找出一条所有游戏共有的本质，结果找不到。它们之间只有一种交叠的相似，像一家人的长相，这个人的鼻子像父亲，那个人的眼睛像母亲，没有哪一个特征为全家所共有。他管这叫“家族相似”。</p>
+        <p class="prose" data-p="s2.10">“累”就是这样一个家族词。肌肉的酸胀，注意力的涣散，睡眠的亏欠，情绪的耗尽，彼此之间有相似，却没有一个共同的核心。我们以为“累”背后站着一个统一的东西，其实站着的是一大家子远近不一的亲戚。“血条与蓝条”这个比喻的用处，无非是把这家人里最容易吵架的两房请到桌前，先各自介绍一下。</p>
+        <figure class="cp reveal" data-cp="c2-family" id="cp-c2-family">
+          <figcaption class="cp-cap"><b>“累”这一家人</b><span>点一个成员，看它和谁长得像；再换一页看古人的劳损账本</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-tabs" role="tablist" aria-label="词族与劳损账本">
+              <button class="chip is-on" type="button" role="tab" aria-selected="true" aria-controls="c2f-p0" id="c2f-t0">家族相似</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c2f-p1" id="c2f-t1">五劳所伤</button>
+            </div>
+
+            <div class="cp-panel" id="c2f-p0" role="tabpanel" aria-labelledby="c2f-t0">
+              <svg class="cp-svg" viewBox="0 0 520 300" role="img" aria-label="以“累”为中心的词族网络，六个成员之间有交叠的相似关系">
+                <g class="fam-links">
+                  <line data-a="0" data-b="5" x1="150" y1="86" x2="372" y2="82"></line>
+                  <line data-a="1" data-b="2" x1="392" y1="150" x2="150" y2="214"></line>
+                  <line data-a="2" data-b="3" x1="150" y1="214" x2="392" y2="218"></line>
+                  <line data-a="1" data-b="3" x1="392" y1="150" x2="392" y2="218"></line>
+                  <line data-a="3" data-b="4" x1="392" y1="218" x2="120" y2="150"></line>
+                  <line data-a="0" data-b="3" x1="150" y1="86" x2="392" y2="218"></line>
+                </g>
+                <g class="fam-hub">
+                  <circle cx="268" cy="152" r="42"></circle>
+                  <text x="268" y="158">累</text>
+                </g>
+                <g class="fam-nodes">
+                  <g class="fam-node" data-n="0" tabindex="0" role="button" aria-label="肌肉的酸胀"><circle cx="150" cy="86" r="30"></circle><text x="150" y="90">肌肉的酸胀</text></g>
+                  <g class="fam-node" data-n="1" tabindex="0" role="button" aria-label="注意力的涣散"><circle cx="392" cy="150" r="30"></circle><text x="392" y="154">注意涣散</text></g>
+                  <g class="fam-node" data-n="2" tabindex="0" role="button" aria-label="睡眠的亏欠"><circle cx="150" cy="214" r="30"></circle><text x="150" y="218">睡眠亏欠</text></g>
+                  <g class="fam-node" data-n="3" tabindex="0" role="button" aria-label="情绪的耗尽"><circle cx="392" cy="218" r="30"></circle><text x="392" y="222">情绪耗尽</text></g>
+                  <g class="fam-node" data-n="4" tabindex="0" role="button" aria-label="牵挂的重量"><circle cx="120" cy="150" r="30"></circle><text x="120" y="154">心累</text></g>
+                  <g class="fam-node" data-n="5" tabindex="0" role="button" aria-label="久坐久视久行带来的劳损"><circle cx="372" cy="82" r="30"></circle><text x="372" y="86">劳损</text></g>
+                </g>
+                <g class="fam-lines">
+                  <line x1="268" y1="152" x2="150" y2="86"></line>
+                  <line x1="268" y1="152" x2="392" y2="150"></line>
+                  <line x1="268" y1="152" x2="150" y2="214"></line>
+                  <line x1="268" y1="152" x2="392" y2="218"></line>
+                  <line x1="268" y1="152" x2="120" y2="150"></line>
+                  <line x1="268" y1="152" x2="372" y2="82"></line>
+                </g>
+              </svg>
+              <p class="cp-out" id="c2f-out" role="status">点一个成员：肌肉的酸胀、注意力的涣散、睡眠的亏欠、情绪的耗尽……它们彼此相似，却没有一个共同的核心。</p>
+              <p class="cp-note">维特根斯坦管这叫“家族相似”：像一家人的长相，这个人的鼻子像父亲，那个人的眼睛像母亲，没有哪一个特征为全家所共有。</p>
+            </div>
+
+            <div class="cp-panel" id="c2f-p1" role="tabpanel" aria-labelledby="c2f-t1" hidden>
+              <svg class="cp-svg cp-svg-body" viewBox="0 0 520 300" role="img" aria-label="“五劳所伤”对应的人体部位示意">
+                <g class="body-fig">
+                  <circle cx="260" cy="52" r="20"></circle>
+                  <line x1="260" y1="72" x2="260" y2="176"></line>
+                  <line x1="212" y1="102" x2="308" y2="102"></line>
+                  <line x1="260" y1="176" x2="222" y2="256"></line>
+                  <line x1="260" y1="176" x2="298" y2="256"></line>
+                </g>
+                <g class="labor-nodes">
+                  <g class="labor" data-l="0" tabindex="0" role="button" aria-label="久视伤血"><circle cx="260" cy="52" r="26"></circle><text x="330" y="50">久视伤血 <tspan>· 目</tspan></text></g>
+                  <g class="labor" data-l="1" tabindex="0" role="button" aria-label="久卧伤气"><circle cx="200" cy="132" r="22"></circle><text x="60" y="136">久卧伤气</text></g>
+                  <g class="labor" data-l="2" tabindex="0" role="button" aria-label="久坐伤肉"><circle cx="260" cy="150" r="22"></circle><text x="330" y="154">久坐伤肉</text></g>
+                  <g class="labor" data-l="3" tabindex="0" role="button" aria-label="久立伤骨"><circle cx="260" cy="196" r="22"></circle><text x="330" y="200">久立伤骨</text></g>
+                  <g class="labor" data-l="4" tabindex="0" role="button" aria-label="久行伤筋"><circle cx="300" cy="256" r="22"></circle><text x="330" y="262">久行伤筋</text></g>
+                </g>
+              </svg>
+              <p class="cp-out" id="c2f-labor" role="status">《黄帝内经》把“看”和“躺”也记在劳损的账上。</p>
+              <p class="cp-note">“精、气、神”里，心神的耗散和形体的疲惫是两件同等重要、又不完全相同的事——古人分得比我们今天一个字打发要细。</p>
+            </div>
+          </div>
+        </figure>
+        <p class="prose" data-p="s2.11">中文里其实早就有这种分野的痕迹。我们说“体力”，也说“精力”，“精”字背后是古人讲的“精、气、神”，把心神的耗散和形体的疲惫看作两件同等重要、又不完全相同的事。《黄帝内经》讲“五劳所伤”：久视伤血，久卧伤气，久坐伤肉，久立伤骨，久行伤筋。连“看”和“躺”都被记在劳损的账上，可见古人对“累”的理解，比我们今天一个字打发要细得多。而“累”字本身，也带着堆叠与牵连的意思，积累、连累、累赘，都是它的亲戚。我们说“心累”，说的也许正是被许多牵挂压在身上的那份重量。只是日常对话里，我们太容易把这一切并成一个字。</p>
+        <p class="prose" data-p="s2.12">还有一层困难：身体的感受，本来就很难说。弗吉尼亚·伍尔夫在《论生病》里感叹过，英语足以写出哈姆雷特的思想与李尔王的悲剧，却拿不出一个像样的词来形容一场头痛。伊莱恩·斯卡里在《The Body in Pain》里走得更远，她认为剧烈的疼痛会瓦解语言，痛的人说不出，听的人也无从确证。“累”比痛温和得多，也因此更容易被当成“没什么”。</p>
+      </section>
+
+      <section class="chapter" id="s3" data-chapter="3" data-cn="三" data-title="血条：一具身体是怎样累的">
+        <h2><span class="ch-num" aria-hidden="true">03</span>三、血条：一具身体是怎样累的</h2>
+        <p class="prose" data-p="s3.1">先说血条，因为运动科学在这里给出了相对清晰的图景。</p>
+        <p class="prose" data-p="s3.2">一次持续的运动，本质上是能量的供应与需求之间的赛跑。肌肉直接使用的能量货币叫ATP，但肌肉里储存的ATP只够用几秒钟，之后要靠三套系统接力供应：磷酸肌酸系统负责最初的爆发，糖酵解系统提供中短时间的快速能量，有氧氧化系统则承担长时间的持续输出。跑十公里、走三万步，主要靠的就是最后这一套，它依赖心肺把氧气送到肌肉，再由肌肉细胞里的线粒体把糖和脂肪“烧”成能量。</p>
+        <figure class="cp reveal" data-cp="c3-energy" id="cp-c3-energy">
+          <figcaption class="cp-cap"><b>三套系统接力</b><span>拖动时长，看肌肉的能量货币由谁供应</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-row">
+              <label class="cp-lab" for="c3-t">运动时长</label>
+              <input class="cp-range" type="range" id="c3-t" min="0" max="10" step="1" value="0" aria-label="运动持续时长">
+              <output class="cp-mono" id="c3-dur" for="c3-t">5 秒</output>
+            </div>
+            <div class="cp-stack" id="c3-stack">
+              <i class="sg sg-pcr" id="c3-pcr" style="width:88%"></i>
+              <i class="sg sg-gly" id="c3-gly" style="width:10%"></i>
+              <i class="sg sg-ox" id="c3-ox" style="width:2%"></i>
+            </div>
+            <div class="cp-legend">
+              <span class="lgd lgd-pcr">磷酸肌酸 <b class="cp-mono" id="c3-pcr-v">88%</b></span>
+              <span class="lgd lgd-gly">糖酵解 <b class="cp-mono" id="c3-gly-v">10%</b></span>
+              <span class="lgd lgd-ox">有氧氧化 <b class="cp-mono" id="c3-ox-v">2%</b></span>
+            </div>
+            <p class="cp-scene" id="c3-scene">磷酸肌酸系统负责最初的爆发——肌肉里储存的 ATP 只够用几秒钟。</p>
+            <p class="cp-out" id="c3-out" role="status">当前主导：磷酸肌酸系统。跑十公里、走三万步，主要靠的是有氧氧化系统。</p>
+            <p class="cp-note">一个人的“血条”，很大程度上是这条有氧链路的总容量：心脏每搏能泵出多少血、毛细血管网络有多密、线粒体的数量与效率如何、动作的经济性如何。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s3.3">所以，一个人的“血条”，很大程度上是这条有氧链路的总容量：心脏每搏能泵出多少血，毛细血管网络有多密，线粒体的数量与效率如何，肌纤维里慢肌纤维的比例是否偏高，跑步或行走时动作的经济性如何。长期的有氧训练会逐步改善这一切：心脏变得更强壮，毛细血管增生，线粒体增多，同样的配速消耗的能量更少。到了这个阶段，十公里对身体来说更像是一次“巡游”，而不是一场“战斗”。</p>
+        <p class="prose" data-p="s3.4">不过，把血条只看成心肺和线粒体的总和，还是太窄了。法国人类学家马塞尔·莫斯在1934年发表过一篇很有名的短文，讲“身体技术”。他的意思是，走路、游泳、跑步、行军、睡觉、蹲坐，这些看似出自天性的动作，其实都是被社会一点点教出来的。他回忆自己在一战期间的见闻：英国士兵不会用法国的铁锹，每次与法军换防，一个师就得换掉几千把铁锹，再重新学一遍怎么挖。步态、呼吸、发力的方式，都带着文化的口音。</p>
+        <p class="prose" data-p="s3.5">这对“血条”是个提醒：一个人耐力的背后，除了心肺与肌纤维，还有一整套被长期养成的动作经济性。我能一口气走三万步，一部分是因为我的心脏，另一部分，是因为我的身体早已把“走”这件事熟练地外包给了自动化的程序，不再需要大脑逐步过问。这一点，后面还会回来。</p>
+        <figure class="cp reveal" data-cp="c3-body-tech" id="cp-c3-body-tech">
+          <figcaption class="cp-cap"><b>走路：自动挡还是手动挡</b><span>同一件事，大脑参与多少，蓝条就差多少</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择走路的方式">
+              <button class="chip is-on" type="button" aria-pressed="true" data-mode="auto" id="c3b-auto">自动挡 · 交给了程序</button>
+              <button class="chip" type="button" aria-pressed="false" data-mode="manual" id="c3b-manual">手动挡 · 每一步都过问</button>
+            </div>
+            <div class="cp-track" id="c3b-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c3b-walk">走 1000 步</button>
+              <button class="btn-ghost" type="button" id="c3b-reset">重新开始</button>
+              <span class="cp-mono" id="c3b-steps">0 步</span>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">蓝条</span><span class="bar mp"><i id="c3b-mp" style="width:100%"></i></span><b class="cp-mono" id="c3b-mpv">100</b></div>
+            </div>
+            <p class="cp-out" id="c3b-out" role="status">自动挡：1000 步 ≈ 蓝条 -1。身体在做功，心神在休息。</p>
+            <p class="cp-note">莫斯把这叫“身体技术”：走路、游泳、跑步、行军、睡觉、蹲坐，这些看似出自天性的动作，都是被社会一点点教出来的——步态、呼吸、发力，都带着文化的口音。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s3.6">那么，血条见底是什么感觉？运动生理学把它分为外周疲劳与中枢疲劳。外周疲劳发生在肌肉本身：肌糖原逐渐耗尽，代谢产物累积，肌纤维内部的钙离子调控和收缩机制出现问题，力量随之下降。中枢疲劳则发生在神经系统：大脑向肌肉发出的驱动信号减弱了。长时间的运动中，两者往往同时发生，难以截然分开。</p>
+        <figure class="cp reveal" data-cp="c3-fatigue-types" id="cp-c3-fatigue-types">
+          <figcaption class="cp-cap"><b>血条见底：两处故障点</b><span>先分辨疲劳发生在哪里，再判断这些信号好不好举证</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-tabs" role="tablist" aria-label="疲劳的类型">
+              <button class="chip is-on" type="button" role="tab" aria-selected="true" aria-controls="c3f-p0" id="c3f-t0">外周疲劳 · 在肌肉</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c3f-p1" id="c3f-t1">中枢疲劳 · 在神经</button>
+            </div>
+            <div class="cp-panel" id="c3f-p0" role="tabpanel" aria-labelledby="c3f-t0">
+              <p class="cp-lede">发生在肌肉本身：肌糖原逐渐耗尽，代谢产物累积，肌纤维内部的钙离子调控和收缩机制出现问题，力量随之下降。</p>
+              <p class="cp-out" id="c3f-out0" role="status">信号：腿酸、肌肉发沉——清晰而局部，你知道自己累在哪里。</p>
+            </div>
+            <div class="cp-panel" id="c3f-p1" role="tabpanel" aria-labelledby="c3f-t1" hidden>
+              <p class="cp-lede">发生在神经系统：大脑向肌肉发出的驱动信号减弱了。长时间的运动中，两者往往同时发生，难以截然分开。</p>
+              <p class="cp-out" id="c3f-out1" role="status">信号：不一定有。而蓝条见底的时候，往往什么身体信号都没有。</p>
+            </div>
+            <p class="cp-lab-line">判断一下，下面这些描述属于哪一处故障：</p>
+            <div class="cp-chips cp-quiz" id="c3f-quiz">
+              <button class="chip q" type="button" data-ans="外周">肌糖原逐渐耗尽，力量随之下降</button>
+              <button class="chip q" type="button" data-ans="中枢">大脑向肌肉发出的驱动信号减弱</button>
+              <button class="chip q" type="button" data-ans="外周">钙离子调控和收缩机制出现问题</button>
+              <button class="chip q" type="button" data-ans="两者同时">长时间运动中，两者往往一起发生</button>
+            </div>
+            <p class="cp-out" id="c3f-out" role="status">已作答 0/4 · 全部答对 0 项</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s3.7">这里有一个很重要的细节：血条见底的信号，通常是清晰而局部的。腿酸，呼吸急促，心跳加速，肌肉发沉。你知道自己累在哪里，也大致知道休息多久可以恢复。这种累，别人一看便懂。你气喘吁吁地坐下，没有人会怀疑你。</p>
+        <p class="prose" data-p="s3.8">而蓝条见底的时候，往往什么身体信号都没有。</p>
+      </section>
+
+      <section class="chapter" id="s4" data-chapter="4" data-cn="四" data-title="蓝条：一个大脑是怎样累的">
+        <h2><span class="ch-num" aria-hidden="true">04</span>四、蓝条：一个大脑是怎样累的</h2>
+        <p class="prose" data-p="s4.1">大脑只占体重的百分之二左右，却要消耗全身约百分之二十的能量，是一个极其昂贵的器官。而在这座昂贵的器官里，负责“控制”的那部分尤其费力：前额叶皮层。</p>
+        <figure class="cp reveal" data-cp="c4-prefrontal" id="cp-c4-prefrontal">
+          <figcaption class="cp-cap"><b>前额叶：四个吃蓝条的活</b><span>四个小测试，各自消耗一点执行功能</span></figcaption>
+          <div class="cp-body">
+            <p class="cp-lede">大脑只占体重的百分之二左右，却要消耗全身约百分之二十的能量。而在这座昂贵的器官里，负责“控制”的那部分尤其费力。</p>
+            <div class="cp-tabs" role="tablist" aria-label="执行功能的四个部分">
+              <button class="chip is-on" type="button" role="tab" aria-selected="true" aria-controls="c4p-p0" id="c4p-t0">工作记忆</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c4p-p1" id="c4p-t1">抑制控制</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c4p-p2" id="c4p-t2">认知灵活性</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c4p-p3" id="c4p-t3">计划与决策</button>
+            </div>
+
+            <div class="cp-panel" id="c4p-p0" role="tabpanel" aria-labelledby="c4p-t0">
+              <p class="cp-lede">在脑子里同时保持几个信息。试试看：记住下面五件事，它们会在三秒后消失。</p>
+              <button class="btn-solid" type="button" id="c4p-wm-start">开始记忆</button>
+              <div class="cp-chips cp-mem" id="c4p-wm-show" aria-live="off"></div>
+              <div class="cp-chips cp-mem" id="c4p-wm-pick" hidden></div>
+              <p class="cp-out" id="c4p-wm-out" role="status">未开始。工作记忆的容量本来就很有限。</p>
+            </div>
+
+            <div class="cp-panel" id="c4p-p1" role="tabpanel" aria-labelledby="c4p-t1" hidden>
+              <p class="cp-lede">压下冲动，不说不该说的话。开始计时后，请忍住，别点那个按钮。</p>
+              <button class="btn-solid" type="button" id="c4p-inh-go">开始 5 秒测试</button>
+              <div class="cp-big"><button class="btn-danger" type="button" id="c4p-inh-btn" disabled>请不要点这个按钮</button></div>
+              <p class="cp-out" id="c4p-inh-out" role="status">未开始。抑制控制就是把这句“不要”真正执行下去的能力。</p>
+            </div>
+
+            <div class="cp-panel" id="c4p-p2" role="tabpanel" aria-labelledby="c4p-t2" hidden>
+              <p class="cp-lede">在不同任务之间切换。规则一换，脑子就要重新加载一次——每次切换都要付“切换成本”。</p>
+              <div class="cp-grid2">
+                <div class="cp-card"><b>规则 A</b><span>看到数字，判断奇偶</span></div>
+                <div class="cp-card"><b>规则 B</b><span>看到字母，判断元音</span></div>
+              </div>
+              <button class="btn-solid" type="button" id="c4p-sw-go">切换 5 次</button>
+              <p class="cp-out" id="c4p-sw-out" role="status">累计切换成本 0.0 秒 · 切换 0 次</p>
+            </div>
+
+            <div class="cp-panel" id="c4p-p3" role="tabpanel" aria-labelledby="c4p-t3" hidden>
+              <p class="cp-lede">计划与决策。从四道菜里选一个，计时器会记下你花了多久。</p>
+              <div class="cp-chips" id="c4p-dec-menu">
+                <button class="chip d" type="button">清炒时蔬</button>
+                <button class="chip d" type="button">酸汤鱼</button>
+                <button class="chip d" type="button">腊味煲仔饭</button>
+                <button class="chip d" type="button">随便，你定</button>
+              </div>
+              <p class="cp-out" id="c4p-dec-out" role="status">还没决定。今天这样的待办决策，已经积了一整页。</p>
+            </div>
+          </div>
+        </figure>
+        <p class="prose" data-p="s4.2">我们通常把前额叶相关的一组能力称为执行功能，包括工作记忆（在脑子里同时保持几个信息）、抑制控制（压下冲动，不说不该说的话）、认知灵活性（在不同任务之间切换）以及计划与决策。这些能力让人类成为人类，也让我们的蓝条成为一种稀缺资源。</p>
+        <p class="prose" data-p="s4.3">近年来有一项很有意思的研究。法国巴黎脑研究所的团队让被试连续六个多小时完成高强度的认知任务，同时用磁共振波谱测量大脑内的化学物质。结果发现，做高难度任务的一组人，外侧前额叶中的谷氨酸浓度明显升高，而做简单任务的一组则没有。谷氨酸是大脑中最主要的兴奋性神经递质，过量的堆积，可能让这一区域继续运转变得“更贵”。与此同时，高负荷组的被试在选择时更倾向于挑选省力、廉价的选项，他们的瞳孔反应也提示努力程度在下降。</p>
+        <p class="prose" data-p="s4.4">这为“蓝条”提供了一个生理学上的候选解释：认知疲劳可能不是虚无缥缈的感觉，而是大脑在为自己的控制系统“记账”。当某个区域已经高负荷运转了太久，继续使用它的成本就会上升，于是大脑发出信号，让你想要偷懒、想要切换、想要休息。需要强调的是，这只是当前研究的一种解释，不是定论。但它至少说明，蓝条并不是矫情。</p>
+        <figure class="cp reveal" data-cp="c4-glutamate" id="cp-c4-glutamate">
+          <figcaption class="cp-cap"><b>蓝条的记账方式</b><span>一页看实验室里的生理线索，一页看那些几乎不留证据的支出</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-tabs" role="tablist" aria-label="两种查看方式">
+              <button class="chip is-on" type="button" role="tab" aria-selected="true" aria-controls="c4g-p0" id="c4g-t0">谷氨酸记账</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c4g-p1" id="c4g-t1">看不见的支出</button>
+            </div>
+
+            <div class="cp-panel" id="c4g-p0" role="tabpanel" aria-labelledby="c4g-t0">
+              <div class="cp-row">
+                <label class="cp-lab" for="c4g-h">高强度认知任务</label>
+                <input class="cp-range" type="range" id="c4g-h" min="0" max="13" step="1" value="0" aria-label="连续高强度认知任务的时长">
+                <output class="cp-mono" id="c4g-hour" for="c4g-h">0.0 小时</output>
+              </div>
+              <div class="cp-meters">
+                <div class="cp-meter"><span class="cp-mk">谷氨酸</span><span class="bar hp"><i id="c4g-glu" style="width:12%"></i></span><b class="cp-mono" id="c4g-glu-v">基线</b></div>
+                <div class="cp-meter"><span class="cp-mk">廉价选项</span><span class="bar hp"><i id="c4g-cheap" style="width:10%"></i></span><b class="cp-mono" id="c4g-cheap-v">10%</b></div>
+                <div class="cp-meter"><span class="cp-mk">努力程度</span><span class="bar mp"><i id="c4g-pupil" style="width:96%"></i></span><b class="cp-mono" id="c4g-pupil-v">96%</b></div>
+              </div>
+              <p class="cp-out" id="c4g-out" role="status">基线状态：外侧前额叶的谷氨酸浓度平稳。</p>
+              <p class="cp-note">法国巴黎脑研究所的团队让被试连续六个多小时完成高强度的认知任务，用磁共振波谱测量大脑内的化学物质：做高难度任务的一组人，外侧前额叶中的谷氨酸浓度明显升高，做简单任务的一组则没有。需要强调的是，这只是当前研究的一种解释，不是定论。</p>
+            </div>
+
+            <div class="cp-panel" id="c4g-p1" role="tabpanel" aria-labelledby="c4g-t1" hidden>
+              <p class="cp-lede">点开今天做过的每一件小事，看看它们各自花掉了多少：</p>
+              <div class="cp-chips" id="c4g-items">
+                <button class="chip x" type="button" data-cost="6">一天里做了几百个小决定</button>
+                <button class="chip x" type="button" data-cost="7">同时记着五件待办事项</button>
+                <button class="chip x" type="button" data-cost="8">不断揣摩对方的表情和言外之意</button>
+                <button class="chip x" type="button" data-cost="5">在嘈杂环境里过滤无关的声音</button>
+                <button class="chip x" type="button" data-cost="6">从一个任务切换到另一个任务</button>
+              </div>
+              <p class="cp-out" id="c4g-items-out" role="status">已记 0 笔 · 单看每一笔都微不足道</p>
+              <p class="cp-note">这些细碎的消耗累积起来，却足以让一个人在下午三点的茶馆里说不出晚饭想吃什么。</p>
+            </div>
+          </div>
+        </figure>
+        <p class="prose" data-p="s4.5">更麻烦的是，蓝条的消耗几乎不留证据。你并没有做什么惊天动地的事，只是在一天里做了几百个小决定；只是同时记着五件待办事项；只是在一场对话里不断揣摩对方的表情和言外之意；只是在嘈杂的环境里努力过滤无关的声音；只是从一个任务切换到另一个任务，每次切换都有“切换成本”。这些细碎的消耗，单看每一笔都微不足道，累积起来却足以让一个人在下午三点的茶馆里说不出晚饭想吃什么。</p>
+      </section>
+
+      <section class="chapter" id="s5" data-chapter="5" data-cn="五" data-title="为什么三万步不累，一次逛街却累">
+        <h2><span class="ch-num" aria-hidden="true">05</span>五、为什么三万步不累，一次逛街却累</h2>
+        <p class="prose" data-p="s5.1">回到那座古城。第一天我走了三万步，认知上做了什么？路线几乎是线性的，往前走就行。每一步的反馈都是即时的：眼前的风景在变，身体在出汗，节奏稳定，呼吸与步伐同步。没有人需要我回应，没有选择需要我权衡。大脑可以放下“控制”，让自动化的运动程序去接管一切。</p>
+        <figure class="cp reveal" data-cp="c5-path" id="cp-c5-path">
+          <figcaption class="cp-cap"><b>线性路 vs 岔路</b><span>同样走一步，一个是执行，一个是决策</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择哪一天的路">
+              <button class="chip is-on" type="button" aria-pressed="true" data-path="linear" id="c5p-linear">第一天的路 · 往前走就行</button>
+              <button class="chip" type="button" aria-pressed="false" data-path="tree" id="c5p-tree">第二天的路 · 每一步都是岔路</button>
+            </div>
+            <div class="cp-mode cp-mode-linear" id="c5p-stage">
+              <svg class="cp-svg cp-svg-path" viewBox="0 0 520 168" role="img" aria-label="线性路线与岔路决策树的对比示意">
+                <path class="pline" d="M18 128 C 130 128, 190 62, 268 62 S 420 96, 502 58"></path>
+                <g class="ptree">
+                  <line x1="18" y1="128" x2="130" y2="128"></line>
+                  <line x1="130" y1="128" x2="210" y2="70"></line>
+                  <line x1="130" y1="128" x2="210" y2="128"></line>
+                  <line x1="130" y1="128" x2="210" y2="150"></line>
+                  <line x1="210" y1="70" x2="300" y2="44"></line>
+                  <line x1="210" y1="70" x2="300" y2="88"></line>
+                  <line x1="210" y1="128" x2="300" y2="112"></line>
+                  <line x1="210" y1="128" x2="300" y2="150"></line>
+                  <line x1="210" y1="150" x2="300" y2="140"></line>
+                  <line x1="300" y1="44" x2="420" y2="30"></line>
+                  <line x1="300" y1="88" x2="420" y2="92"></line>
+                  <line x1="300" y1="112" x2="420" y2="120"></line>
+                  <line x1="300" y1="150" x2="420" y2="152"></line>
+                </g>
+                <g class="pticks" id="c5p-ticks"></g>
+              </svg>
+            </div>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c5p-step">再走一步</button>
+              <button class="btn-ghost" type="button" id="c5p-reset">重走一遍</button>
+              <span class="cp-mono" id="c5p-count">0 / 12 步</span>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">蓝条</span><span class="bar mp"><i id="c5p-mp" style="width:100%"></i></span><b class="cp-mono" id="c5p-mpv">100</b></div>
+              <div class="cp-meter"><span class="cp-mk">待决策</span><span class="cp-mono cp-steps-num" id="c5p-dec">0</span></div>
+            </div>
+            <p class="cp-out" id="c5p-out" role="status">线性路线：路线几乎是线性的，往前走就行——每一步的反馈都是即时的，蓝条几乎不动。</p>
+            <p class="cp-note">有一种说法叫“短暂性额叶功能低下”：在节律性、持续性的运动中，大脑的一部分高级认知区域活动会暂时下调——这可能是很多人在跑步时感到“脑子放空”的原因之一。这一假说还没有被完全证实，但它与许多人的主观体验相吻合。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s5.2">步行本来就是一件奇怪的事：身体在做功，心神却常常在休息。尼采说过，真正伟大的思想都是在行走中孕育的。哲学家、作家们爱散步，大概不是巧合。有一种说法叫“短暂性额叶功能低下”，由神经科学家阿恩·迪特里希在2003年前后提出，认为在节律性、持续性的运动中，大脑的一部分高级认知区域活动会暂时下调，这可能是很多人在跑步时感到“脑子放空”的原因之一。这一假说还没有被完全证实，但它与许多人的主观体验相吻合：有节奏的运动，有时恰恰是让蓝条休息的方式。再加上运动带来的即时反馈感、运动后内啡肽与内源性大麻素等系统参与的愉悦感，长跑对我而言并不像“消耗”，更像是一种“充电”。</p>
+        <p class="prose" data-p="s5.3">第二天呢？“往哪个方向逛？”“这家店进不进去？”“这件衣服要不要买？”“她是不是有点累了，我该不该提议休息？”“晚上吃什么，吃辣还是清淡，她上次说过什么来着？”每一个都是小决策，每一个都需要注意力、记忆与社会判断。</p>
+        <p class="prose" data-p="s5.4">而决策还只是一半，另一半是“人”。社会学家戈夫曼把日常生活比作舞台：只要有他人在场，我们就在做“印象管理”，要保持礼貌，要显得体贴，要让谈话不冷场，要在对方失望之前先察觉。阿莉·霍克希尔德研究空乘人员的微笑，提出“情绪劳动”一词，说的是有些工作要求你把自己的情绪当作工具来管理。我们通常只在有偿工作里谈情绪劳动，可在朋友之间、亲人之间、一场自认为“放松”的旅行里，类似的支出一样存在，只是它没有工资，也没有人把它记成“工作”。第一天我们大多在赶路，步伐分担了人与人之间的互动；第二天坐下来，四目相对，反而没有了缓冲。</p>
+        <p class="prose" data-p="s5.5">再加上环境。齐美尔在1903年写《大都会与精神生活》，指出都市人每天要承受远超乡村的神经刺激，于是发展出一种保护性的冷淡，一种对什么都不太上心的姿态，把自己包起来，好少被消耗。古城里的商业街，就是一座微缩的都市：招牌、叫卖声、人流、橱窗，全在争夺注意力。而作为游客，我们偏偏不能冷淡，因为来这里就是为了“看”。</p>
+        <figure class="cp reveal" data-cp="c5-three-forces" id="cp-c5-three-forces">
+          <figcaption class="cp-cap"><b>逛街里的三股消耗</b><span>决策、他人、环境，各自从蓝条里抽走一点</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="预设场景">
+              <button class="chip" type="button" aria-pressed="false" data-preset="day1" id="c5f-p1">第一天的赶路</button>
+              <button class="chip is-on" type="button" aria-pressed="true" data-preset="day2" id="c5f-p2">第二天的轻松逛街</button>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c5f-dec">决策密度</label>
+              <input class="cp-range" type="range" id="c5f-dec" min="0" max="100" step="1" value="8" aria-label="决策密度">
+              <b class="cp-mono" id="c5f-dec-v">8</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c5f-soc">他人与你互动</label>
+              <input class="cp-range" type="range" id="c5f-soc" min="0" max="100" step="1" value="10" aria-label="社交互动的强度">
+              <b class="cp-mono" id="c5f-soc-v">10</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c5f-env">环境刺激</label>
+              <input class="cp-range" type="range" id="c5f-env" min="0" max="100" step="1" value="12" aria-label="环境刺激的强度">
+              <b class="cp-mono" id="c5f-env-v">12</b>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">蓝条支出</span><span class="bar mp"><i id="c5f-cost" style="width:9%"></i></span><b class="cp-mono" id="c5f-cost-v">9</b></div>
+              <div class="cp-meter"><span class="cp-mk">血条支出</span><span class="bar hp"><i id="c5f-hp" style="width:70%"></i></span><b class="cp-mono" id="c5f-hp-v">70</b></div>
+            </div>
+            <p class="cp-out" id="c5f-out" role="status">当前：第一天的赶路——体力在消耗，心神却常常在休息。</p>
+            <p class="cp-note">戈夫曼把日常生活比作舞台：只要有他人在场，我们就在做“印象管理”；霍克希尔德把这种支出叫“情绪劳动”——它一样存在，只是没有工资，也没有人把它记成“工作”。齐美尔则提醒，都市人每天要承受远超乡村的神经刺激，而作为游客，我们偏偏不能冷淡，因为来这里就是为了“看”。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s5.6">这也解释了那个看似矛盾的现象：我可以整天走路而不觉得累，却会在几小时的“轻松逛街”之后精疲力竭。不是我前后不一致，而是两天里消耗的是两种不同的资源。</p>
+      </section>
+
+      <section class="chapter" id="s6" data-chapter="6" data-cn="六" data-title="两条条，并不各自为政">
+        <h2><span class="ch-num" aria-hidden="true">06</span>六、两条条，并不各自为政</h2>
+        <p class="prose" data-p="s6.1">说到这里，“血条与蓝条”似乎是两个完全独立的系统。但如果我们就此停下，就会错失这个话题里最有意思的部分。事实上，两者之间存在着复杂的相互作用。</p>
+        <p class="prose" data-p="s6.2">先看蓝条如何影响血条。运动生理学家马可拉（Samuele Marcora）在2009年做过一项著名的实验：让受试者先花九十分钟完成一项繁重的认知任务，另一次则让同一批人看一部轻松的纪录片，随后都进行骑行至力竭的测试。结果，认知疲劳的那一次，人们平均更早放弃了。有意思的是，两种情况下心率、血乳酸、摄氧量等生理指标并没有明显差别，唯一不同的是“主观用力感”：同样的功率，大脑疲劳的时候觉得更吃力。</p>
+        <figure class="cp reveal" data-cp="c6-marcora" id="cp-c6-marcora">
+          <figcaption class="cp-cap"><b>Marcora 实验：谁先放弃</b><span>两次骑行的生理指标几乎一样，结果却不一样</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择先做的事">
+              <button class="chip is-on" type="button" aria-pressed="true" data-arm="doc" id="c6m-doc">先看一部轻松的纪录片</button>
+              <button class="chip" type="button" aria-pressed="false" data-arm="cog" id="c6m-cog">先做 90 分钟认知任务</button>
+            </div>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c6m-ride">开始骑行至力竭</button>
+              <span class="cp-mono" id="c6m-state">待测试</span>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">力竭时间</span><span class="bar hp"><i id="c6m-time" style="width:0%"></i></span><b class="cp-mono" id="c6m-time-v">—</b></div>
+              <div class="cp-meter"><span class="cp-mk">主观用力感</span><span class="bar hp"><i id="c6m-rpe" style="width:0%"></i></span><b class="cp-mono" id="c6m-rpe-v">—</b></div>
+            </div>
+            <div class="cp-grid3">
+              <div class="cp-card"><b>心率</b><span class="cp-mono" id="c6m-hr">—</span></div>
+              <div class="cp-card"><b>血乳酸</b><span class="cp-mono" id="c6m-la">—</span></div>
+              <div class="cp-card"><b>摄氧量</b><span class="cp-mono" id="c6m-vo2">—</span></div>
+            </div>
+            <p class="cp-out" id="c6m-out" role="status">选一组，然后开始骑行。</p>
+            <p class="cp-note">运动生理学家马可拉（Samuele Marcora）在 2009 年做过这项实验。两种情况下心率、血乳酸、摄氧量等生理指标并没有明显差别，唯一不同的是“主观用力感”：同样的功率，大脑疲劳的时候觉得更吃力。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s6.3">这意味着，运动中人为什么停下，并不完全取决于肌肉和心肺的极限，还取决于大脑对“努力”的感受与评估。蓝条见底，可以让血条“提前失效”。</p>
+        <p class="prose" data-p="s6.4">这个发现其实有一百多年前的回声。十九世纪末，意大利生理学家安杰洛·莫索发明了一台叫“测力计”的仪器，让人用一根手指反复举起重物，直到再也举不动，借此给疲劳画曲线。据记载，他发现一个人在经历繁重的脑力劳动之后，同一根手指能举起的次数会明显减少。“脑子累了，手指也没劲”这件事，早在工业时代的实验室里就被记录过，只是后来身体与心神常常被分给不同的学科去研究，线索才散落在了不同的书架上。</p>
+        <figure class="cp reveal" data-cp="c6-ergograph" id="cp-c6-ergograph">
+          <figcaption class="cp-cap"><b>莫索的手指测力计</b><span>一根手指能举起多少次，也可以被脑子拖累</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择测试前的状态">
+              <button class="chip is-on" type="button" aria-pressed="true" data-mode="rest" id="c6e-rest">休息之后</button>
+              <button class="chip" type="button" aria-pressed="false" data-mode="brain" id="c6e-brain">繁重脑力劳动之后</button>
+            </div>
+            <svg class="cp-svg cp-svg-chart" viewBox="0 0 520 180" role="img" aria-label="手指反复举重的高度随次数下降的疲劳曲线">
+              <line class="axis" x1="32" y1="150" x2="500" y2="150"></line>
+              <line class="axis" x1="32" y1="20" x2="32" y2="150"></line>
+              <line class="guide" x1="32" y1="20" x2="500" y2="20"></line>
+              <polyline id="c6e-line" points=""></polyline>
+            </svg>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c6e-lift">举起手指</button>
+              <button class="btn-ghost" type="button" id="c6e-reset">换一根手指</button>
+              <span class="cp-mono" id="c6e-count">0 次</span>
+            </div>
+            <p class="cp-out" id="c6e-out" role="status">高度 100% · 还能继续。点“举起手指”逐次记录。</p>
+            <p class="cp-note">莫索让人用一根手指反复举起重物，直到再也举不动，借此给疲劳画曲线。“脑子累了，手指也没劲”这件事，早在工业时代的实验室里就被记录过。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s6.5">再看血条如何影响蓝条。大量研究显示，一次中等强度的有氧运动之后，人的注意力、工作记忆和执行功能常常会有短暂的提升；长期规律的运动，则与更好的情绪、睡眠以及海马体和前额叶相关脑区的健康相关，其中可能涉及脑源性神经营养因子（BDNF）等物质的增加。也就是说，身体训练不只是“练身体”，还在为大脑提供更好的运行环境。我在跑完步之后思路更清楚，并不是错觉。</p>
+        <p class="prose" data-p="s6.6">睡眠则是把两条条同时拉低或拉高的总开关。睡眠不足时，肌肉恢复变慢，反应速度下降，前额叶功能受损，情绪也更容易失控。所以，一个人今天的“蓝条”到底有多长，往往取决于昨晚的睡眠、这周的压力、最近的情绪，以及身体有没有隐藏的问题。</p>
+        <figure class="cp reveal" data-cp="c6-budget" id="cp-c6-budget">
+          <figcaption class="cp-cap"><b>总开关与预算报告</b><span>睡眠、压力、情绪、预期，合成一声“累”</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="预设">
+              <button class="chip" type="button" aria-pressed="false" data-set="short" id="c6b-s1">昨晚只睡了 5 小时</button>
+              <button class="chip" type="button" aria-pressed="false" data-set="full" id="c6b-s2">睡够了 8 小时</button>
+              <button class="chip" type="button" aria-pressed="false" data-set="dread" id="c6b-s3">今天要做一件厌烦的报表</button>
+              <button class="chip" type="button" aria-pressed="false" data-set="keen" id="c6b-s4">今天要做一件期待的事</button>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c6b-sleep">昨晚睡眠</label>
+              <input class="cp-range" type="range" id="c6b-sleep" min="4" max="9" step="0.5" value="7.5" aria-label="昨晚睡眠小时数">
+              <b class="cp-mono" id="c6b-sleep-v">7.5 h</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c6b-stress">这周的压力</label>
+              <input class="cp-range" type="range" id="c6b-stress" min="0" max="100" step="1" value="30" aria-label="这周的压力">
+              <b class="cp-mono" id="c6b-stress-v">30</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c6b-expect">对接下来这件事的预期</label>
+              <input class="cp-range" type="range" id="c6b-expect" min="0" max="100" step="1" value="50" aria-label="对接下来这件事的预期，从厌烦到期待">
+              <b class="cp-mono" id="c6b-expect-v">中立</b>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">蓝条长度</span><span class="bar mp"><i id="c6b-mp" style="width:70%"></i></span><b class="cp-mono" id="c6b-mpv">70</b></div>
+              <div class="cp-meter"><span class="cp-mk">血条恢复</span><span class="bar hp"><i id="c6b-hp" style="width:70%"></i></span><b class="cp-mono" id="c6b-hpv">70</b></div>
+            </div>
+            <p class="cp-out" id="c6b-out" role="status">今天的读数：还撑得住。睡眠是把两条条同时拉低或拉高的总开关。</p>
+            <p class="cp-note">神经科学家丽莎·费尔德曼·巴瑞特认为，大脑最根本的工作是管理身体的“预算”。“累”更像是大脑发出的一份预算报告，而不是一个精确的仪表读数：同样的身体状态，在你期待的活动面前可能“不累”，在你厌烦的任务面前却“累得动不了”。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s6.7">更深一层来看，神经科学家丽莎·费尔德曼·巴瑞特提出过一种观点：大脑最根本的工作，是管理身体的“预算”，也就是持续预测身体需要多少能量，并提前调配。在这个视角下，“累”更像是大脑发出的一份预算报告，而不是一个精确的仪表读数。它综合了肌肉的状态、内脏的信号、睡眠的欠账、情绪的波动，以及你对接下来要做的事情的预期。所以同样的身体状态，在你期待的活动面前可能“不累”，在你厌烦的任务面前却“累得动不了”。</p>
+      </section>
+
+      <section class="chapter" id="s7" data-chapter="7" data-cn="七" data-title="别把蓝条当成油箱">
+        <h2><span class="ch-num" aria-hidden="true">07</span>七、别把蓝条当成油箱</h2>
+        <p class="prose" data-p="s7.1">写到这里，我必须给这个比喻泼一点冷水。</p>
+        <p class="prose" data-p="s7.2">流行的说法里，有一个著名的“自我耗竭”理论：意志力像肌肉，用多了就会疲劳，或者像一箱油，用完了就没有了。它最初来自20世纪末的一系列实验，一度非常有影响力。然而，后来的大规模多实验室重复研究（二十多个实验室、两千多名被试）却发现，这一效应几乎接近于零。学界至今仍在争论其原因，但一个相对稳妥的结论是：不宜把心理资源想象成一个固定容量、会被机械耗光的油箱。</p>
+        <figure class="cp reveal" data-cp="c7-replication" id="cp-c7-replication">
+          <figcaption class="cp-cap"><b>多实验室重复：效应几乎归零</b><span>一个著名的理论，是怎么被后来的研究削平的</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="查看哪一批研究">
+              <button class="chip is-on" type="button" aria-pressed="true" data-view="orig" id="c7r-orig">20 世纪末的原始实验</button>
+              <button class="chip" type="button" aria-pressed="false" data-view="rep" id="c7r-rep">二十多个实验室的重复研究</button>
+            </div>
+            <svg class="cp-svg cp-svg-forest" viewBox="0 0 520 200" role="img" aria-label="原始实验与多实验室重复研究的效应量对比图">
+              <line class="axis" x1="40" y1="168" x2="504" y2="168"></line>
+              <line class="guide" x1="40" y1="34" x2="504" y2="34"></line>
+              <line class="axis zero" x1="40" y1="140" x2="504" y2="140"></line>
+              <text class="tick" x="6" y="144">0</text>
+              <text class="tick" x="6" y="38">大</text>
+              <g id="c7r-bars"></g>
+            </svg>
+            <p class="cp-out" id="c7r-out" role="status">原始实验：意志力像肌肉，用多了就会疲劳，或者像一箱油，用完了就没有了。</p>
+            <p class="cp-note">后来的大规模多实验室重复研究（二十多个实验室、两千多名被试）却发现，这一效应几乎接近于零。一个相对稳妥的结论是：不宜把心理资源想象成一个固定容量、会被机械耗光的油箱。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s7.3">那么，蓝条到底是什么？</p>
+        <p class="prose" data-p="s7.4">一种更受欢迎的思路是“成本—收益”的视角。心理学家库尔茨班等人提出，大脑并不是没油了才叫你停，而是在不断评估：继续做这件事，值不值得？放下它去做别的，又能得到什么？换句话说，“累”在一定程度上是一种估价，是大脑对“继续投入是否划算”的判断，动机、兴趣、意义感、回报，都会改变这个估价。一个热爱写作的人可以连写十小时而甘之如饴；同样一个人，做一个自己毫无兴趣的报表，一小时就想逃跑。</p>
+        <figure class="cp reveal" data-cp="c7-cost-benefit" id="cp-c7-cost-benefit">
+          <figcaption class="cp-cap"><b>成本—收益：这件事值不值得</b><span>大脑不是没油了才叫你停，而是在不断估价</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="预设任务">
+              <button class="chip" type="button" aria-pressed="false" data-task="write" id="c7c-write">热爱写作的人 · 连写十小时</button>
+              <button class="chip" type="button" aria-pressed="false" data-task="sheet" id="c7c-sheet">毫无兴趣的报表 · 一小时就想逃</button>
+              <button class="chip" type="button" aria-pressed="false" data-task="club" id="c7c-club">阿远的读书会 · 讲三个小时</button>
+              <button class="chip" type="button" aria-pressed="false" data-task="claim" id="c7c-claim">阿远的报销单 · 拖一个星期</button>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c7c-mot">动机</label>
+              <input class="cp-range" type="range" id="c7c-mot" min="0" max="100" step="1" value="60" aria-label="动机">
+              <b class="cp-mono" id="c7c-mot-v">60</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c7c-int">兴趣</label>
+              <input class="cp-range" type="range" id="c7c-int" min="0" max="100" step="1" value="60" aria-label="兴趣">
+              <b class="cp-mono" id="c7c-int-v">60</b>
+            </div>
+            <div class="cp-row">
+              <label class="cp-lab" for="c7c-mng">意义感</label>
+              <input class="cp-range" type="range" id="c7c-mng" min="0" max="100" step="1" value="60" aria-label="意义感">
+              <b class="cp-mono" id="c7c-mng-v">60</b>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">可坚持</span><span class="bar mp"><i id="c7c-span" style="width:60%"></i></span><b class="cp-mono" id="c7c-span-v">6.0 h</b></div>
+              <div class="cp-meter"><span class="cp-mk">这一件事的价格</span><span class="cp-mono cp-steps-num" id="c7c-price">中</span></div>
+            </div>
+            <p class="cp-out" id="c7c-out" role="status">同样的身体、同样的蓝条，换一件事，能撑的时长就完全不同。</p>
+            <p class="cp-note">他的蓝条并没有忽长忽短，变的是这件事在他心里的价格。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s7.5">阿远也是如此。他能在读书会上滔滔不绝讲三个小时，却会把一张报销单拖上一个星期。他的蓝条并没有忽长忽短，变的是这件事在他心里的价格。</p>
+        <p class="prose" data-p="s7.6">这个视角带来两个重要启发。</p>
+        <p class="prose" data-p="s7.7">第一，蓝条不是一条纯粹的生理容量，而是生理、情绪、意义与环境共同作用的结果。所以“我今天蓝条短”不是一种道德缺陷，也不该被简化为“你就是意志力不够”。</p>
+        <p class="prose" data-p="s7.8">第二，这也意味着蓝条有可以调节的空间。把决策变少，把任务变清晰，把环境变安静，把工作与意义相连，都可能让同样的“容量”支撑更长的时间。</p>
+        <figure class="cp reveal" data-cp="c7-redflag" id="cp-c7-redflag">
+          <figcaption class="cp-cap"><b>什么时候不该只用比喻解释</b><span>勾选你身上出现过的项——这不是性格问题</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-checks" id="c7f-list">
+              <label class="ck"><input type="checkbox" data-flag="1"><span>长期休息也无法恢复</span></label>
+              <label class="ck"><input type="checkbox" data-flag="2"><span>疲劳感明显异于从前</span></label>
+              <label class="ck"><input type="checkbox" data-flag="3"><span>睡眠障碍、白天过度困倦</span></label>
+              <label class="ck"><input type="checkbox" data-flag="4"><span>贫血、甲状腺问题、抑郁或焦虑的可能</span></label>
+            </div>
+            <p class="cp-out" id="c7f-out" role="status">已标记 0 项 · 比喻可以帮你开口，但不能代替检查。</p>
+            <p class="cp-note">如果一个人长期休息也无法恢复，或者疲劳感明显异于从前，就不应该只用“性格”来解释，而应该考虑睡眠障碍、贫血、甲状腺问题、抑郁或焦虑等可能，并寻求专业评估。比喻是理解世界的工具，不是拒绝检查的理由。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s7.9">不过，我们同样要警惕另一种误用：把一切困顿都归因于“我是低精力体质”。如果一个人长期休息也无法恢复，或者疲劳感明显异于从前，就不应该只用“性格”来解释，而应该考虑睡眠障碍、贫血、甲状腺问题、抑郁或焦虑等可能，并寻求专业评估。比喻是理解世界的工具，不是拒绝检查的理由。</p>
+      </section>
+
+      <section class="chapter" id="s8" data-chapter="8" data-cn="八" data-title="看不见的累：一段简短的社会史">
+        <h2><span class="ch-num" aria-hidden="true">08</span>八、看不见的累：一段简短的社会史</h2>
+        <p class="prose" data-p="s8.1">如果把镜头拉远，“累”其实不只是个人的事，它有历史，也有阶级和性别。</p>
+        <p class="prose" data-p="s8.2">在钟表统治世间之前，人们大多“看活干活”。历史学家E.P.汤普森在一篇经典论文里描述过前工业社会的“任务导向”：农人的一天由挤奶、收割、修篱笆这些具体的活计来划分，忙时拼命，闲时散漫，时间是活的。工厂出现之后，时间变成了可以按分钟计价的货币，人被要求在钟点里持续输出。此后，“累”才逐渐成为一个需要被测量、被管理的问题。科学史家安森·拉宾巴赫在《人体马达》里讲过这段往事：十九世纪的欧洲，疲劳被视为工业社会最大的敌人之一，莫索那样的生理学家用仪器给它画曲线，为的是弄清“人这台机器”最多能开多久。</p>
+        <figure class="cp reveal" data-cp="c8-timeline" id="cp-c8-timeline">
+          <figcaption class="cp-cap"><b>“累”的编年史</b><span>展开每一条，看疲劳如何被时间、仪器与诊断重新命名</span></figcaption>
+          <div class="cp-body">
+            <ol class="cp-tl">
+              <li><details class="tl"><summary><b>前工业社会</b><span>任务导向：时间是活的</span></summary>
+                <p>农人的一天由挤奶、收割、修篱笆这些具体的活计来划分，忙时拼命，闲时散漫。历史学家 E.P. 汤普森在一篇经典论文里把它叫作“任务导向”。</p></details></li>
+              <li><details class="tl"><summary><b>钟表与工厂</b><span>时间变成可以按分钟计价的货币</span></summary>
+                <p>工厂出现之后，人被要求在钟点里持续输出。此后，“累”才逐渐成为一个需要被测量、被管理的问题。</p></details></li>
+              <li><details class="tl"><summary><b>十九世纪 · 实验室</b><span>给疲劳画一条曲线</span></summary>
+                <p>科学史家安森·拉宾巴赫在《人体马达》里讲过这段往事：十九世纪的欧洲，疲劳被视为工业社会最大的敌人之一，莫索那样的生理学家用仪器给它画曲线，为的是弄清“人这台机器”最多能开多久。</p></details></li>
+              <li><details class="tl"><summary><b>1869 · 神经衰弱</b><span>焦虑从肌肉转向神经</span></summary>
+                <p>美国医生乔治·比尔德提出“神经衰弱”，把当时人们莫名的倦怠、失眠与无力归咎于文明本身：蒸汽机、电报、报刊、越来越快的节奏，让现代人的神经“入不敷出”。</p></details></li>
+              <li><details class="tl"><summary><b>1980s · 湖南的病房</b><span>苦痛的习语</span></summary>
+                <p>精神病学家兼人类学家凯博文发现，大批被诊断为“神经衰弱”的病人，按当时的国际标准，大多其实符合抑郁症的诊断。他的解释不是“他们在装”，而是：在那个年代，说“我累”“我头晕”“我没力气”，是一种被社会接受、也相对安全的表达，用来承载那些更难开口的东西。</p></details></li>
+            </ol>
+            <p class="cp-out" id="c8t-out" role="status">展开任意一条：同一个字，在不同的年代装着不同的东西。</p>
+            <p class="cp-note">所以听人说累，既不能一口否定，也不必急着替他归类。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s8.3">有意思的是，时代的焦虑很快从肌肉转向了神经。1869年，美国医生乔治·比尔德提出“神经衰弱”，把当时人们莫名的倦怠、失眠与无力归咎于文明本身：蒸汽机、电报、报刊、越来越快的节奏，让现代人的神经“入不敷出”。这个诊断后来流行了很久，也传到了中国。上世纪八十年代，精神病学家兼人类学家凯博文在湖南做研究，发现大批被诊断为“神经衰弱”的病人，按当时的国际标准，大多其实符合抑郁症的诊断。他的解释不是“他们在装”，而是：在那个年代，说“我累”“我头晕”“我没力气”，是一种被社会接受、也相对安全的表达，用来承载那些更难开口的东西，比如委屈、无助和长年的压抑。人类学里把这类说法叫作“苦痛的习语”。</p>
+        <p class="prose" data-p="s8.4">这对我们的话题是一个提醒：“累”这个字的负荷比想象中更重。有时它说的是血条，有时是蓝条，有时是“我难过，但我不知道怎么说”。所以听人说累，既不能一口否定，也不必急着替他归类。</p>
+        <p class="prose" data-p="s8.5">再看社会如何对待不同的累。孟子说“劳心者治人，劳力者治于人”，这是一幅流传了两千多年的分工图景，也隐含着一种等级。可这幅图景里有个耐人寻味的缺口：劳力的辛苦有目共睹，老茧、汗渍、佝偻的背，都是它的证词；劳心的辛苦却几乎不留痕迹，它被尊敬，却很少被当作一种需要偿还的消耗。</p>
+        <figure class="cp reveal" data-cp="c8-exemption" id="cp-c8-exemption">
+          <figcaption class="cp-cap"><b>豁免券窗口</b><span>同一张申请表，两种累的通过率完全不同</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择申请者">
+              <button class="chip is-on" type="button" aria-pressed="true" data-app="mp" id="c8e-mp">申请者 A · 蓝条见底</button>
+              <button class="chip" type="button" aria-pressed="false" data-app="hp" id="c8e-hp">申请者 B · 血条见底</button>
+            </div>
+            <ul class="cp-list" id="c8e-list">
+              <li><b>① 有具体证据吗</b><span id="c8e-r0">体温、化验单、绷带——越具体越容易通过</span></li>
+              <li><b>② 这病是“真的”吗</b><span id="c8e-r1">需要可以被指认的东西</span></li>
+              <li><b>③ 本人愿意好起来吗</b><span id="c8e-r2">愿意配合，才配得上这张券</span></li>
+            </ul>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c8e-apply">提交豁免券申请</button>
+              <span class="cp-mono" id="c8e-state">待提交</span>
+            </div>
+            <p class="cp-out" id="c8e-out" role="status">申请者 A：蓝条见底。三条要求里，一条都拿不出证明。</p>
+            <p class="cp-note">社会学家帕森斯在上世纪五十年代提出过“病人角色”：社会愿意给生病的人一张豁免券，可以暂时不承担平常的责任，也不被责备，条件是这病得是“真的”。血条见底自带证据，蓝条见底几乎没有，所以最容易被拒发。孟子说“劳心者治人，劳力者治于人”，可劳力的辛苦有目共睹——老茧、汗渍、佝偻的背，都是它的证词；劳心的辛苦却几乎不留痕迹。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s8.6">社会学家帕森斯在上世纪五十年代提出过“病人角色”：社会愿意给生病的人一张豁免券，可以暂时不承担平常的责任，也不被责备，条件是这病得是“真的”，并且本人愿意好起来。而“真的”通常需要证据，体温、化验单、绷带，越具体越容易通过。血条见底自带证据，蓝条见底几乎没有，所以最容易被拒发这张豁免券。“你怎么可能累”，翻译过来就是：你的证据不够。</p>
+        <p class="prose" data-p="s8.7">蓝条的这种“隐形”，在日常生活里还有一个不太被谈论的侧面。社会学家阿莉森·丹明格在2019年的一项研究里，把家庭中的“认知劳动”拆成几个环节：预见有什么需要，识别有哪些选择，做出决定，再盯着结果落实。她发现在异性伴侣中，前面的预见和后面的盯办，更多是由女性承担的。这些劳动同样不出汗，也几乎不会被记入功劳簿，却实实在在地消耗着蓝条。</p>
+        <figure class="cp reveal" data-cp="c8-cognitive-labor" id="cp-c8-cognitive-labor">
+          <figcaption class="cp-cap"><b>认知劳动：四个环节</b><span>不出汗的劳动，也一样在花蓝条</span></figcaption>
+          <div class="cp-body">
+            <ol class="cp-steps cp-steps-row" id="c8c-steps">
+              <li><button class="step" type="button" data-step="0"><b>① 预见</b><span class="step-v">有什么需要？</span></button></li>
+              <li><button class="step" type="button" data-step="1"><b>② 识别</b><span class="step-v">有哪些选择？</span></button></li>
+              <li><button class="step" type="button" data-step="2"><b>③ 决定</b><span class="step-v">选哪一个？</span></button></li>
+              <li><button class="step" type="button" data-step="3"><b>④ 盯办</b><span class="step-v">结果落实了吗？</span></button></li>
+            </ol>
+            <div class="cp-chips cp-chips-line" role="group" aria-label="额外的切换">
+              <button class="chip" type="button" aria-pressed="false" id="c8c-gender">在异性伴侣中：预见与盯办更多由女性承担</button>
+              <button class="chip" type="button" aria-pressed="false" id="c8c-dinner">“晚饭想吃什么？”</button>
+            </div>
+            <p class="cp-out" id="c8c-out" role="status">点开四个环节里的任意一个，看看它对应的日常。</p>
+            <p class="cp-note">那句“晚饭想吃什么”是一句再体贴不过的话，她是在尊重我的意愿。可对当时的我来说，这句体贴的话恰恰是一个待办的决策，一笔要当场结清的账。这里没有谁做错了什么，只是体贴的形式，有时恰好就是蓝条的支出。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s8.8">我回头想起茶馆里朋友那句“晚饭想吃什么”。那是一句再体贴不过的话，她是在尊重我的意愿。可对当时的我来说，这句体贴的话恰恰是一个待办的决策，一笔要当场结清的账。这里没有谁做错了什么，只是体贴的形式，有时恰好就是蓝条的支出。</p>
+      </section>
+
+      <section class="chapter" id="s9" data-chapter="9" data-cn="九" data-title="“累”的哲学：一场关于他人的想象力">
+        <h2><span class="ch-num" aria-hidden="true">09</span>九、“累”的哲学：一场关于他人的想象力</h2>
+        <p class="prose" data-p="s9.1">写到这里，我想把目光从大脑移开，放回人本身。</p>
+        <p class="prose" data-p="s9.2">美国哲学家托马斯·内格尔在1974年写过一篇著名的文章：《成为一只蝙蝠是什么感觉？》。他想说的是，有些体验是极其私人的，你可以了解蝙蝠的回声定位在物理上如何运作，却永远无法真正知道“作为蝙蝠”是什么滋味。</p>
+        <p class="prose" data-p="s9.3">“累”是一种缩小版的蝙蝠难题。我们每个人只能从内部感受自己的疲劳，对他人的疲劳，只能通过语言、表情和行为间接推测。而推测的时候，我们几乎无一例外地使用自己的经验作为参照：“我这样的活动量不会累，所以你也不该累。”这是一种朴素的、几乎不被察觉的自我中心。</p>
+        <figure class="cp reveal" data-cp="c9-other-minds" id="cp-c9-other-minds">
+          <figcaption class="cp-cap"><b>他心：蝙蝠与甲虫</b><span>两页比喻，一个讲体验无法进入，一个讲词义来自共同使用</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-tabs" role="tablist" aria-label="两个比喻">
+              <button class="chip is-on" type="button" role="tab" aria-selected="true" aria-controls="c9o-p0" id="c9o-t0">成为一只蝙蝠</button>
+              <button class="chip" type="button" role="tab" aria-selected="false" aria-controls="c9o-p1" id="c9o-t1">每个人的盒子</button>
+            </div>
+
+            <div class="cp-panel" id="c9o-p0" role="tabpanel" aria-labelledby="c9o-t0">
+              <div class="cp-grid2">
+                <div class="cp-card"><b>可以了解的</b><span>回声定位在物理上如何运作：频率、回声、飞行轨迹</span></div>
+                <div class="cp-card cp-dim"><b>无法进入的</b><span>“作为蝙蝠”是什么滋味</span></div>
+              </div>
+              <button class="btn-solid" type="button" id="c9o-try">试着进入它的体验</button>
+              <p class="cp-out" id="c9o-out" role="status">还没试过。有些体验是极其私人的。</p>
+              <p class="cp-note">“累”是一种缩小版的蝙蝠难题：我们每个人只能从内部感受自己的疲劳，对他人的疲劳，只能通过语言、表情和行为间接推测。而推测的时候，我们几乎无一例外地使用自己的经验作为参照。</p>
+            </div>
+
+            <div class="cp-panel" id="c9o-p1" role="tabpanel" aria-labelledby="c9o-t1" hidden>
+              <p class="cp-lede">设想每个人都有一只盒子，里头装着一样东西，大家都管它叫“甲虫”，但谁都只能看自己盒子里的。点开看看：</p>
+              <div class="cp-chips" id="c9o-boxes">
+                <button class="chip b" type="button" data-box="mine">我的盒子</button>
+                <button class="chip b" type="button" data-box="other1">别人的盒子 · 一</button>
+                <button class="chip b" type="button" data-box="other2">别人的盒子 · 二</button>
+              </div>
+              <button class="btn-solid" type="button" id="c9o-rule">那我们靠什么彼此说“累”</button>
+              <p class="cp-out" id="c9o-box-out" role="status">点一只盒子：只有自己的那只打得开。</p>
+              <p class="cp-note">他的回答是：有，但这意义与盒子里究竟装着什么无关，盒子里甚至可能是空的。词的意义来自我们共同使用它的方式。</p>
+            </div>
+          </div>
+        </figure>
+        <p class="prose" data-p="s9.4">维特根斯坦在《哲学研究》里有一个更狡黠的比喻。他说，设想每个人都有一只盒子，里头装着一样东西，大家都管它叫“甲虫”，但谁都只能看自己盒子里的，看不到别人的。这时，“甲虫”这个词还有意义吗？他的回答是：有，但这意义与盒子里究竟装着什么无关，盒子里甚至可能是空的。词的意义来自我们共同使用它的方式。</p>
+        <p class="prose" data-p="s9.5">这个比喻常被拿去讨论“私人感受”能不能成为语言的基础，但我在里面读出了另一层意思：我们之所以能彼此说“累”，靠的从来不是看清对方盒里的甲虫，而是大家默认了一条使用规则，别人说累的时候，认真对待。这条规则一旦松动，“累”这个词就会退化成一场彼此举证的官司。</p>
+        <p class="prose" data-p="s9.6">因此，“你怎么可能累？”这句话最深的问题，不在于它冒犯，而在于它把一个人内部的、无法直接验证的体验，用外部可见的证据一票否决了。一个天天跑步的人，被否定的是他的蓝条；一个每天处理许多事情的人，被否定的是他的血条。被否定的人往往还会内化这种否定，开始怀疑自己：“也许我真的是在装，也许我就是不够努力。”</p>
+        <p class="prose" data-p="s9.7">法国哲学家西蒙娜·薇依把注意力称作人所能给予他人的最稀有、最纯粹的慷慨。听别人说累，先不急着反驳，而是留下一点注意力去了解，也许就是这种慷慨最日常的样子。</p>
+        <p class="prose" data-p="s9.8">庄子在《养生主》里写道：“吾生也有涯，而知也无涯。以有涯随无涯，殆已！”人的生命有限，而要应对的事务与知识无穷，若以有限去追赶无限，就会疲惫而危险。今天的我们，几乎每个人都在这种处境里：信息、任务、关系、期待，无穷无尽，而每个人的血条与蓝条，都是有涯的。</p>
+        <figure class="cp reveal" data-cp="c9-cook" id="cp-c9-cook">
+          <figcaption class="cp-cap"><b>庖丁解牛：依乎天理</b><span>同样的刀，同样十九年，走缝隙还是硬砍</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择下刀的方式">
+              <button class="chip is-on" type="button" aria-pressed="true" data-way="gap" id="c9k-gap">依乎天理 · 走骨节的缝隙</button>
+              <button class="chip" type="button" aria-pressed="false" data-way="chop" id="c9k-chop">硬砍 · 不理会结构</button>
+            </div>
+            <svg class="cp-svg cp-svg-ox" viewBox="0 0 520 190" role="img" aria-label="沿着骨节缝隙下刀与硬砍的结构示意">
+              <path class="ox" d="M60 62 C 140 22, 380 22, 458 68 C 500 98, 468 142, 398 148 C 300 158, 140 152, 84 130 C 48 116, 40 86, 60 62 Z"></path>
+              <g class="joints">
+                <line x1="120" y1="46" x2="120" y2="140"></line>
+                <line x1="180" y1="34" x2="180" y2="150"></line>
+                <line x1="240" y1="30" x2="240" y2="154"></line>
+                <line x1="300" y1="30" x2="300" y2="154"></line>
+                <line x1="360" y1="34" x2="360" y2="150"></line>
+                <line x1="420" y1="46" x2="420" y2="140"></line>
+              </g>
+              <path class="route route-gap" id="c9k-r-gap" d="M52 96 C 120 66, 176 122, 240 84 S 340 122, 400 86 S 462 106, 490 94"></path>
+              <path class="route route-chop" id="c9k-r-chop" d="M52 96 L 490 96"></path>
+              <circle class="blade" id="c9k-blade" cx="52" cy="96" r="6"></circle>
+            </svg>
+            <div class="cp-row">
+              <label class="cp-lab" for="c9k-prog">下刀</label>
+              <input class="cp-range" type="range" id="c9k-prog" min="0" max="100" step="1" value="0" aria-label="下刀的进度">
+              <b class="cp-mono" id="c9k-prog-v">0%</b>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">刀刃</span><span class="bar hp"><i id="c9k-wear" style="width:2%"></i></span><b class="cp-mono" id="c9k-wear-v">如新</b></div>
+            </div>
+            <p class="cp-out" id="c9k-out" role="status">依乎天理：顺着牛身体本来的结构下刀，不硬砍，不蛮撬。刀用了十九年而刀刃如新。</p>
+            <p class="cp-note">我把这看作一种关于“累”的智慧：不是要变得无穷无尽，而是要认清自己的纹理，在骨节的缝隙里游走。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s9.9">庄子接着讲了庖丁解牛的故事。庖丁的刀用了十九年而刀刃如新，秘诀是“依乎天理，批大郤，导大窾，因其固然”，顺着牛身体本来的结构下刀，不硬砍，不蛮撬。我把这看作一种关于“累”的智慧：不是要变得无穷无尽，而是要认清自己的纹理，在骨节的缝隙里游走。</p>
+        <p class="prose" data-p="s9.10">韩国裔德国哲学家韩炳哲在《倦怠社会》里则给出了另一种警示。他认为当代社会已经从“你不可以”的规训社会，转向“你能够”的功绩社会。人不再被外力压迫，而是被自我驱动，不断地自我优化、自我剥削。法国社会学家阿兰·埃亨伯格在《自我的倦怠》里有一个相近的诊断：当社会不再规定“你该成为谁”，而是要求“你要成为你自己”，个人就被推到了一个没有尽头的责任面前，抑郁与倦怠成了这种责任的病。在这样的社会里，疲惫成了一种时代性的症状，而“你能够”的口号也常常变成对“不能够”的人的无声审判。一个人如果承认自己蓝条短，似乎就是承认自己在竞争中落后。</p>
+        <figure class="cp reveal" data-cp="c9-merit" id="cp-c9-merit">
+          <figcaption class="cp-cap"><b>从“你不可以”到“你能够”</b><span>压力从哪里来，决定疲惫意味着什么</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" role="group" aria-label="选择社会形态">
+              <button class="chip is-on" type="button" aria-pressed="true" data-soc="disc" id="c9m-disc">规训社会 · “你不可以”</button>
+              <button class="chip" type="button" aria-pressed="false" data-soc="merit" id="c9m-merit">功绩社会 · “你能够”</button>
+            </div>
+            <div class="cp-grid2 cp-loop" id="c9m-cards">
+              <div class="cp-card"><b>压力来自</b><span id="c9m-src">外部的规定与禁令</span></div>
+              <div class="cp-card"><b>口号</b><span id="c9m-slogan">你不可以</span></div>
+              <div class="cp-card"><b>能不能停</b><span id="c9m-stop">可以停——你被允许停</span></div>
+              <div class="cp-card"><b>累了意味着</b><span id="c9m-mean">你尽了责</span></div>
+            </div>
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c9m-loop">让循环转一圈</button>
+              <span class="cp-mono" id="c9m-state">静止</span>
+            </div>
+            <p class="cp-out" id="c9m-out" role="status">规训社会：人不再被外力压迫，疲惫有借口的余地。</p>
+            <p class="cp-note">韩炳哲在《倦怠社会》里认为，当代社会已经从“你不可以”的规训社会，转向“你能够”的功绩社会：人不再被外力压迫，而是被自我驱动，不断地自我优化、自我剥削。埃亨伯格在《自我的倦怠》里有一个相近的诊断：当社会要求“你要成为你自己”，个人就被推到了一个没有尽头的责任面前。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s9.11">所以，把“血条与蓝条”讲清楚，在我看来不只是一个生活小技巧，也是一种温和的抵抗：抵抗那种把人的复杂性压缩成单一指标的思维，抵抗“能者无所不能，不能者即是懒惰”的粗暴逻辑。</p>
+      </section>
+
+      <section class="chapter" id="s10" data-chapter="10" data-cn="十" data-title="与自己的蓝条相处">
+        <h2><span class="ch-num" aria-hidden="true">10</span>十、与自己的蓝条相处</h2>
+        <p class="prose" data-p="s10.1">如果这些思考要落到日常里，我会给自己，也给和我一样的人，几条不算宏大的建议。</p>
+        <p class="prose" data-p="s10.2">第一，弄清自己的“累”是什么类型。累了之后先问一句：是腿累，还是脑子累？是想躺下，还是想安静？是对事情本身厌倦，还是被人群耗光了？不同的累，需要不同的休息。</p>
+        <figure class="cp reveal" data-cp="c10-diagnose" id="cp-c10-diagnose">
+          <figcaption class="cp-cap"><b>你的累是哪一种</b><span>三个问题，匹配一种休息方式</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-q">
+              <b>1 · 是腿累，还是脑子累？</b>
+              <div class="cp-chips" role="group" aria-label="第一个问题">
+                <button class="chip o" type="button" aria-pressed="false" data-q="1" data-v="hp">腿累</button>
+                <button class="chip o" type="button" aria-pressed="false" data-q="1" data-v="mp">脑子累</button>
+              </div>
+            </div>
+            <div class="cp-q">
+              <b>2 · 是想躺下，还是想安静？</b>
+              <div class="cp-chips" role="group" aria-label="第二个问题">
+                <button class="chip o" type="button" aria-pressed="false" data-q="2" data-v="hp">想躺下</button>
+                <button class="chip o" type="button" aria-pressed="false" data-q="2" data-v="mp">想安静</button>
+              </div>
+            </div>
+            <div class="cp-q">
+              <b>3 · 是对事情本身厌倦，还是被人群耗光了？</b>
+              <div class="cp-chips" role="group" aria-label="第三个问题">
+                <button class="chip o" type="button" aria-pressed="false" data-q="3" data-v="mp">对事情厌倦</button>
+                <button class="chip o" type="button" aria-pressed="false" data-q="3" data-v="mp">被人群耗光</button>
+              </div>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">血条型</span><span class="bar hp"><i id="c10d-hp" style="width:0%"></i></span><b class="cp-mono" id="c10d-hpv">0</b></div>
+              <div class="cp-meter"><span class="cp-mk">蓝条型</span><span class="bar mp"><i id="c10d-mp" style="width:0%"></i></span><b class="cp-mono" id="c10d-mpv">0</b></div>
+            </div>
+            <p class="cp-out" id="c10d-out" role="status">回答三个问题后，这里会给出匹配的休息方式。不同的累，需要不同的休息。</p>
+            <p class="cp-note">高体力低精力的人，常见的误区是用“刷手机”来休息，殊不知这会继续消耗注意力和决策资源。赫伯特·西蒙早在 1971 年就指出，信息的丰富，意味着注意力的贫乏。今天的应用软件，大多以占用你的注意力为业，拿它们来“休息”，等于把蓝条借给了别人。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s10.3">第二，把休息也设计成有针对性的。高体力低精力的人，常见的误区是用“刷手机”来休息，殊不知这会继续消耗注意力和决策资源。赫伯特·西蒙早在1971年就指出，信息的丰富，意味着注意力的贫乏。今天的应用软件，大多以占用你的注意力为业，拿它们来“休息”，等于把蓝条借给了别人。对我来说，真正有效的休息往往是走路、慢跑、洗个热水澡、在没有信息输入的地方发呆。让身体动起来，反而能让大脑静下来。</p>
+        <p class="prose" data-p="s10.4">第三，减少不必要的决策与切换。固定的日程、提前想好的菜单、把相似的任务集中处理、给深度工作留出整块的、不被打断的时间。蓝条短的人，更要善用“预设”来节省资源。</p>
+        <figure class="cp reveal" data-cp="c10-preset" id="cp-c10-preset">
+          <figcaption class="cp-cap"><b>用预设省下蓝条</b><span>把要当场做的决定，提前挪到不累的时候</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-checks" id="c10p-list">
+              <label class="ck"><input type="checkbox" data-save="14"><span>固定的日程：不必每天重新安排一遍</span></label>
+              <label class="ck"><input type="checkbox" data-save="12"><span>提前想好的菜单：到点不用再选</span></label>
+              <label class="ck"><input type="checkbox" data-save="16"><span>把相似的任务集中处理</span></label>
+              <label class="ck"><input type="checkbox" data-save="20"><span>给深度工作留出整块的、不被打断的时间</span></label>
+              <label class="ck"><input type="checkbox" data-save="18"><span>事前说明：“我今天下午可能需要一个人待一会儿”</span></label>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">省下的蓝条</span><span class="bar mp"><i id="c10p-bar" style="width:0%"></i></span><b class="cp-mono" id="c10p-bar-v">0</b></div>
+            </div>
+            <p class="cp-out" id="c10p-out" role="status">已预设 0/5 项 · 这不是软弱，而是让身边的人拿到一份关于你的使用说明。</p>
+            <p class="cp-note">减少不必要的决策与切换。蓝条短的人，更要善用“预设”来节省资源。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s10.5">第四，允许自己在事前说明。“我今天下午可能需要一个人待一会儿”，或者“逛一个小时之后我们找个地方坐坐吧”。这不是软弱，而是让身边的人拿到一份关于你的使用说明。</p>
+        <p class="prose" data-p="s10.6">第五，也是最重要的一条：不要用一条曲线去审判另一条。当有人说累时，试着先相信他，再去了解他累在哪里。当我们自己觉得“别人怎么这么容易累”时，不妨想想，是不是我们只看到了对方的一条曲线。</p>
+      </section>
+
+      <section class="chapter" id="s11" data-chapter="11" data-cn="十一" data-title="尾声：茶馆里的那杯茶">
+        <h2><span class="ch-num" aria-hidden="true">11</span>十一、尾声：茶馆里的那杯茶</h2>
+        <p class="prose" data-p="s11.1">回到那座古城的茶馆。</p>
+        <p class="prose" data-p="s11.2">那天下午，我终于对朋友说了这样一段话：“我不是走累了，我是被‘选择’累到了。让我安静坐二十分钟，我就能回来。”</p>
+        <figure class="cp reveal" data-cp="c11-recharge" id="cp-c11-recharge">
+          <figcaption class="cp-cap"><b>二十分钟</b><span>不解释、不决策、不说话，看那一格蓝怎么回来</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-row cp-row-btn">
+              <button class="btn-solid" type="button" id="c11r-go">开始安静坐二十分钟</button>
+              <button class="btn-ghost" type="button" id="c11r-reset">重新来过</button>
+              <output class="cp-mono" id="c11r-clock">第 0 分钟</output>
+            </div>
+            <div class="cp-meters">
+              <div class="cp-meter"><span class="cp-mk">蓝条</span><span class="bar mp"><i id="c11r-mp" style="width:8%"></i></span><b class="cp-mono" id="c11r-mpv">8</b></div>
+            </div>
+            <ol class="cp-lines" id="c11r-lines">
+              <li data-at="1">“我不是走累了，我是被‘选择’累到了。让我安静坐二十分钟，我就能回来。”</li>
+              <li data-at="6">“原来是这样。我以为你是不好意思说腿疼。”</li>
+              <li data-at="12">“其实我昨天脚底就磨出泡了，也一直没好意思讲。”</li>
+              <li data-at="20">二十分钟后，我感到那格熟悉的蓝，从很深的地方缓缓地涨了上来。</li>
+            </ol>
+            <p class="cp-out" id="c11r-out" role="status">还没开始。窗外是一条窄窄的巷子，有人骑车经过，铃声清脆。</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s11.3">她愣了一下，然后笑了：“原来是这样。我以为你是不好意思说腿疼。”她顿了顿，又说：“其实我昨天脚底就磨出泡了，也一直没好意思讲。”我们对视了一眼，都笑了。原来我们各自守着一条看得见的累和一条看不见的累，谁也没敢先开口。</p>
+        <p class="prose" data-p="s11.4">茶馆是个恰当的地方。历史学家王笛研究过成都的茶馆，那里是普通人最日常的公共空间，人们在那里谈生意、听评书、摆龙门阵，也在那里什么都不干。社会学家雷·奥登伯格把这类地方叫作“第三空间”，既不是家，也不是单位，你可以在里头坐着，而不必证明自己为什么坐着。对一个刚被“选择”耗空的人来说，这样的地方几乎是一份礼物。</p>
+        <p class="prose" data-p="s11.5">德国哲学家约瑟夫·皮珀在《闲暇：文化的基础》里说，闲暇不只是工作的间歇，而是一种心灵的态度，一种安静地接受、让世界如其所是的能力。那天下午我并不知道这些，只是觉得，这杯茶要慢慢喝。</p>
+        <p class="prose" data-p="s11.6">我们各自点了一杯茶，没有再讨论晚饭吃什么，也没有再说话。窗外是一条窄窄的巷子，有人骑车经过，铃声清脆。二十分钟后，我感到那格熟悉的蓝，从很深的地方缓缓地涨了上来。</p>
+        <p class="prose" data-p="s11.7">后来我常常想起这个下午。它让我明白，所谓“了解自己”，并不只是知道自己擅长什么、喜欢什么，也包括知道自己在哪一种消耗面前最容易见底，以及需要什么样的方式重新充盈。</p>
+        <p class="prose" data-p="s11.8">血条与蓝条，只是一个粗糙的比喻。真实的人，比任何游戏界面都复杂。但一个好的比喻的价值，就在于它给了我们一个开口的方式，让我们在说“我累了”的时候，可以再多说一句：“我是哪一种累。”</p>
+        <figure class="cp reveal" data-cp="c11-close" id="cp-c11-close">
+          <figcaption class="cp-cap"><b>说出下半句</b><span>“我累了”之后，还可以再多说一句</span></figcaption>
+          <div class="cp-body">
+            <div class="cp-chips" id="c11c-opts" role="group" aria-label="选择你的下半句">
+              <button class="chip y" type="button" data-say="我是血条累——腿酸、呼吸急促，睡一觉就能回来。">血条累</button>
+              <button class="chip y" type="button" data-say="我是蓝条累——今天不想再做任何决定。">蓝条累</button>
+              <button class="chip y" type="button" data-say="我是“我难过，但我不知道怎么说”的那一种。">说不出口的那种</button>
+              <button class="chip y" type="button" data-say="两条都见底了——先躺下，再安静。">两条都见底</button>
+            </div>
+            <p class="cp-out cp-quote-out" id="c11c-out" role="status">我累了。</p>
+            <p class="cp-note">血条与蓝条，只是一个粗糙的比喻。真实的人，比任何游戏界面都复杂。但一个好的比喻的价值，就在于它给了我们一个开口的方式，让我们在说“我累了”的时候，可以再多说一句：“我是哪一种累。”</p>
+          </div>
+        </figure>
+        <p class="prose" data-p="s11.9">而当我们愿意听别人说出下半句的时候，理解才真正开始。</p>
+      </section>
+
+      <footer class="doc-foot">
+        <p><b>关于这份页面</b></p>
+        <ul>
+          <li>正文 11 章、89 个段落、约 10,243 字，逐字保真；27 个交互组件全部由正文内容推演，不堆砌装饰。</li>
+          <li>单文件自包含：不引用任何外部资源——没有 CDN、没有外链字体、没有图片文件，断网也能正常打开。</li>
+          <li>右下角的双条面板随阅读进度推演文中那两天；<kbd>←</kbd> <kbd>→</kbd> 可翻章；右上角可切换明暗主题；已适配 <span class="cp-mono">prefers-reduced-motion</span>。</li>
+          <li>文中的研究与历史材料均按原文陈述，比喻是理解世界的工具。若长期休息也无法恢复，或疲劳感明显异于从前，请寻求专业评估。</li>
+        </ul>
+      </footer>
+    </main>
+  </div>
+
+  <aside class="hud" id="hud" aria-label="双条状态面板：随阅读进度推演文中那两天">
+    <div class="hud-head">
+      <b>随阅读推演</b>
+      <button class="hud-btn" type="button" id="hud-btn" aria-expanded="true" aria-label="收起双条面板">收起</button>
+    </div>
+    <div class="hud-row"><span class="hud-k">血条</span><span class="hud-track"><i class="hp" id="hud-hp" style="width:96%"></i></span><span class="hud-v" id="hud-hp-v">96</span></div>
+    <div class="hud-row"><span class="hud-k">蓝条</span><span class="hud-track"><i class="mp" id="hud-mp" style="width:82%"></i></span><span class="hud-v" id="hud-mp-v">82</span></div>
+    <p class="hud-note" id="hud-note">起 · 两条都还满着，故事从一座南方古城开始</p>
+  </aside>
+
+<script>
+/* ══ app.js ══ */
+/* ══════════════════════════════════════════════════════════════
+   app.js —— 页面基础设施：主题 / 目录与滚动高亮 / 进度条 / 双条 HUD /
+   入场揭示 / 键盘翻章。零依赖，全部为顶层函数声明。
+   ══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var THEME_KEY = 'hpmp-theme';
+  var mqReduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function motionOK() { return !(mqReduce && mqReduce.matches); }
+
+  /* ─────────── 1. 主题 ─────────── */
+  var themeBtn = $('#theme-btn');
+
+  function applyTheme(t) {
+    root.setAttribute('data-theme', t);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#0a0e13' : '#f4f1ea');
+    if (themeBtn) {
+      themeBtn.setAttribute('aria-label', t === 'dark' ? '切换到亮色主题' : '切换到暗色主题');
+      themeBtn.setAttribute('title', t === 'dark' ? '亮色主题' : '暗色主题');
+      var lbl = themeBtn.querySelector('.btn-label');
+      if (lbl) lbl.textContent = t === 'dark' ? '亮色' : '暗色';
+      var sun = themeBtn.querySelector('.ico-sun');
+      var moon = themeBtn.querySelector('.ico-moon');
+      if (sun) sun.style.display = t === 'dark' ? 'block' : 'none';
+      if (moon) moon.style.display = t === 'dark' ? 'none' : 'block';
+    }
+  }
+
+  function readTheme() {
+    try {
+      var v = localStorage.getItem(THEME_KEY);
+      if (v === 'dark' || v === 'light') return v;
+    } catch (e) { /* 隐私模式忽略 */ }
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+
+  applyTheme(readTheme());
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* 忽略 */ }
+    });
+  }
+
+  /* ─────────── 2. 目录 ─────────── */
+  var chapters = $$('section.chapter');
+  var tocList = $('#toc-list');
+  var tocBox = $('#toc');
+  var tocBtn = $('#toc-btn');
+
+  // 目录：HTML 里已有静态目录（无 JS 时同样可用），只在为空时才由 JS 构建
+  if (tocList && chapters.length && !tocList.children.length) {
+    var frag = document.createDocumentFragment();
+    chapters.forEach(function (sec) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.className = 'toc-link';
+      a.href = '#' + sec.id;
+      a.setAttribute('data-target', sec.id);
+      var n = document.createElement('span');
+      n.className = 'toc-n';
+      n.textContent = sec.getAttribute('data-cn') || sec.getAttribute('data-chapter') || '';
+      var t = document.createElement('span');
+      t.textContent = sec.getAttribute('data-title') || sec.id;
+      a.appendChild(n);
+      a.appendChild(t);
+      li.appendChild(a);
+      frag.appendChild(li);
+    });
+    tocList.appendChild(frag);
+  }
+
+  var tocLinks = $$('.toc-link');
+
+  function closeToc() {
+    if (!tocBox) return;
+    tocBox.classList.remove('open');
+    if (tocBtn) tocBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function openToc() {
+    if (!tocBox) return;
+    tocBox.classList.add('open');
+    if (tocBtn) tocBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  if (tocBtn) {
+    tocBtn.addEventListener('click', function () {
+      if (tocBox && tocBox.classList.contains('open')) closeToc(); else openToc();
+    });
+  }
+
+  // 目录跳转：默认平滑滚动；若 420ms 内未真正位移（自动化 / 冻结环境），强制瞬时跳转兜底
+  tocLinks.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('data-target');
+      var target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      closeToc();
+      var y0 = window.scrollY;
+      var top = target.getBoundingClientRect().top + window.scrollY - 62;
+      window.scrollTo({ top: top, behavior: motionOK() ? 'smooth' : 'instant' });
+      window.setTimeout(function () {
+        if (Math.abs(window.scrollY - y0) < 4) {
+          window.scrollTo({ top: top, behavior: 'instant' });
+        }
+      }, 420);
+    });
+  });
+
+  /* ─────────── 3. 进度条 + 目录高亮 + 入场揭示（同一 tick） ─────────── */
+  var pbar = $('#progress-bar');
+  var revealEls = $$('.reveal');
+  var activeId = '';
+
+  function updateActive() {
+    if (!chapters.length || !tocLinks.length) return;
+    var line = window.scrollY + 150;
+    var cur = chapters[0];
+    for (var i = 0; i < chapters.length; i++) {
+      var top = chapters[i].getBoundingClientRect().top + window.scrollY;
+      if (top <= line) cur = chapters[i];
+    }
+    if (cur.id === activeId) return;
+    activeId = cur.id;
+    tocLinks.forEach(function (a) {
+      var on = a.getAttribute('data-target') === activeId;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+
+  function updateReveal() {
+    if (!revealEls.length) return;
+    var h = window.innerHeight || 800;
+    for (var i = 0; i < revealEls.length; i++) {
+      var el = revealEls[i];
+      if (el.classList.contains('is-in')) continue;
+      var r = el.getBoundingClientRect();
+      // 视口上方（向上滚动回来）与视口内的元素都要揭示
+      if (r.top < h * 0.94) el.classList.add('is-in');
+    }
+  }
+
+  /* 双条 HUD：随阅读进度的叙事推演。
+     13 个锚点 = 开场 + 第一章的三处转折（三万步 / 茶馆）+ 第二章到第十一章各一处，
+     锚点位置由真实章节几何算出，因此 HUD 的说明始终跟着正在读的那一章。 */
+  var HU = [
+    { hp: 96, mp: 82, t: '起 · 两条都还满着，故事从一座南方古城开始' },
+    { hp: 82, mp: 74, t: '一 · 第一天：三万一千步，血条下降，蓝条几乎没动' },
+    { hp: 78, mp: 8, t: '一 · 下午三点茶馆：蓝条见底，身体却拿不出任何证据' },
+    { hp: 78, mp: 26, t: '二 · 一个字，两本账：同一个“累”，说着两件事' },
+    { hp: 56, mp: 33, t: '三 · 血条见底：腿酸、呼吸急促，别人一看便懂' },
+    { hp: 60, mp: 12, t: '四 · 蓝条见底：一条身体信号都没有，却真的空了' },
+    { hp: 66, mp: 20, t: '五 · 三万步不累，几小时“轻松逛街”却精疲力竭' },
+    { hp: 52, mp: 9, t: '六 · 蓝条低，血条会提前失效：主观用力感才是刹车' },
+    { hp: 64, mp: 46, t: '七 · 蓝条是估价：动机、兴趣、意义都会改变它' },
+    { hp: 64, mp: 40, t: '八 · 看不见的累，也有它的历史、阶级与性别' },
+    { hp: 70, mp: 38, t: '九 · 听别人说累，先留下一点注意力，别急着反驳' },
+    { hp: 76, mp: 44, t: '十 · 与自己的蓝条相处：弄清类型，设计休息' },
+    { hp: 80, mp: 72, t: '十一 · 二十分钟，那一格熟悉的蓝从很深的地方涨上来' }
+  ];
+  var anchors = null;
+  var hud = $('#hud');
+  var hudHp = $('#hud-hp');
+  var hudMp = $('#hud-mp');
+  var hudHpV = $('#hud-hp-v');
+  var hudMpV = $('#hud-mp-v');
+  var hudNote = $('#hud-note');
+  var hudBtn = $('#hud-btn');
+  var lastHp = -1, lastMp = -1, lastNote = '', lastPct = -1;
+
+  if (hudBtn && hud) {
+    hudBtn.addEventListener('click', function () {
+      var min = hud.classList.toggle('min');
+      hudBtn.setAttribute('aria-expanded', min ? 'false' : 'true');
+      hudBtn.setAttribute('aria-label', min ? '展开双条面板' : '收起双条面板');
+      hudBtn.textContent = min ? '展开' : '收起';
+    });
+  }
+
+  function lerp(a, b, k) { return a + (b - a) * k; }
+
+  // 锚点比例由真实章节几何算出（窗口尺寸变化时重算）
+  function computeAnchors() {
+    if (!chapters.length) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var topOf = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+    var c1t = topOf(chapters[0]);
+    var c1h = chapters[0].offsetHeight || 4000;
+    var ys = [0, c1t + c1h * 0.42, c1t + c1h * 0.82];
+    for (var i = 1; i < chapters.length; i++) ys.push(topOf(chapters[i]));
+    anchors = ys.map(function (y) { return max > 8 ? clamp(y / max, 0, 1) : 0; });
+  }
+
+  function updateProgress() {
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var p = max > 8 ? clamp(window.scrollY / max, 0, 1) : 0;
+    if (pbar) {
+      var pct = Math.round(p * 1000) / 10;
+      if (pct !== lastPct) { pbar.style.width = pct + '%'; lastPct = pct; }
+    }
+    if (!hudHp || !hudMp) return;
+    if (!anchors) computeAnchors();
+    if (!anchors || anchors.length < 2) return;
+    var i = 0;
+    while (i < anchors.length - 2 && p > anchors[i + 1]) i++;
+    var a0 = anchors[i], b0 = anchors[i + 1];
+    var span = (b0 - a0) || 0.0001;
+    var k = clamp((p - a0) / span, 0, 1);
+    var a = HU[i], b = HU[i + 1];
+    var hp = Math.round(lerp(a.hp, b.hp, k));
+    var mp = Math.round(lerp(a.mp, b.mp, k));
+    var note = k < 0.5 ? a.t : b.t;
+    if (hp !== lastHp) { hudHp.style.width = hp + '%'; if (hudHpV) hudHpV.textContent = hp; lastHp = hp; }
+    if (mp !== lastMp) { hudMp.style.width = mp + '%'; if (hudMpV) hudMpV.textContent = mp; lastMp = mp; }
+    if (note !== lastNote) { hudNote.textContent = note; lastNote = note; }
+  }
+
+  function tick() {
+    updateProgress();
+    updateActive();
+    updateReveal();
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { ticking = false; tick(); });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { anchors = null; onScroll(); });
+  window.addEventListener('load', function () { anchors = null; onScroll(); });
+
+  // 看门狗：不依赖首个 scroll 事件，600ms 轮询兜底（含向上滚动回来的揭示）
+  tick();
+  window.setInterval(tick, 600);
+
+  /* ─────────── 5. 键盘翻章（← → ，瞬时跳转，避免平滑滚动在自动化环境失效） ─────────── */
+  function chapterIndexFromScroll() {
+    var line = window.scrollY + 150;
+    var idx = 0;
+    for (var i = 0; i < chapters.length; i++) {
+      var top = chapters[i].getBoundingClientRect().top + window.scrollY;
+      if (top <= line) idx = i;
+    }
+    return idx;
+  }
+
+  function gotoChapter(i) {
+    if (!chapters.length) return;
+    var idx = clamp(i, 0, chapters.length - 1);
+    var top = chapters[idx].getBoundingClientRect().top + window.scrollY - 62;
+    window.scrollTo({ top: top, behavior: 'instant' });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+    var tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || (e.target && e.target.isContentEditable)) return;
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      gotoChapter(chapterIndexFromScroll() + 1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      gotoChapter(chapterIndexFromScroll() - 1);
+    }
+  });
+})();
+
+</script>
+<script>
+/* ══ comp.js ══ */
+/* ══════════════════════════════════════════════════════════════
+   comp.js —— 27 个交互组件的全部逻辑（零依赖，顶层函数声明）
+   ══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function on(el, ev, fn) { if (el) el.addEventListener(ev, fn); }
+  function txt(el, s) { if (el) el.textContent = s; }
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function bar(el, pct) { if (el) el.style.width = clamp(pct, 0, 100).toFixed(1) + '%'; }
+  function commas(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function fix(n, d) { return Number(n).toFixed(d === undefined ? 1 : d); }
+
+  // 可点击元素：鼠标 + 键盘（Enter / 空格），保证 role="button" 名副其实
+  function clickable(el, fn) {
+    if (!el) return;
+    on(el, 'click', function (e) { e.preventDefault(); fn(e); });
+    on(el, 'keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(e); }
+    });
+  }
+
+  // 通用标签页：单选 + 面板切换
+  function bindTabs(tabs, panels, onShow) {
+    if (!tabs.length) return;
+    function show(i) {
+      tabs.forEach(function (t, j) {
+        var sel = i === j;
+        t.setAttribute('aria-selected', sel ? 'true' : 'false');
+        t.classList.toggle('is-on', sel);
+        if (panels[j]) panels[j].hidden = !sel;
+      });
+      if (onShow) onShow(i);
+    }
+    tabs.forEach(function (t, i) { on(t, 'click', function () { show(i); }); });
+    return show;
+  }
+
+  // 通用单选 chip 组
+  function bindChips(chips, fn) {
+    chips.forEach(function (c) {
+      on(c, 'click', function () {
+        chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); o.classList.toggle('is-on', o === c); });
+        fn(c);
+      });
+    });
+  }
+
+  /* ══════════ 01 · 两日对照 ══════════ */
+  var D1 = {
+    hp: [98, 97, 95, 94, 93, 92, 91, 90, 89, 89, 88, 88, 87, 86],
+    mp: [84, 83, 82, 82, 81, 81, 80, 80, 79, 79, 78, 78, 77, 77],
+    steps: [0, 1800, 4200, 7000, 9800, 12600, 15000, 17400, 19600, 21800, 24000, 26200, 28600, 31000],
+    scene: [
+      '08:00 · 出发。石板路被几百年的脚步磨得发亮，雨后能照出人影。',
+      '09:00 · 河埠头有妇人蹲着洗菜，水面漂着几片黄叶。',
+      '10:00 · 爬满藤蔓的老墙拐进巷子。',
+      '11:00 · 巷子深处有一家只有三张桌子的旧书店。',
+      '12:00 · 老板趴在柜台后面打盹，我们翻了半个钟头旧书。',
+      '13:00 · 他连眼皮都没抬一下，我们继续往前。',
+      '14:00 · 没有要赶的景点，路线几乎是线性的。',
+      '15:00 · 往前走就行，每一步的反馈都是即时的。',
+      '16:00 · 傍晚回程，呼吸和步伐对上了拍子。',
+      '17:00 · 手机的计步器停在 31,000 步。',
+      '18:00 · 我不但不觉得累，还意犹未尽。',
+      '19:00 · 提议绕远路，去看一眼夜里的江面。',
+      '20:00 · 江上有零星的渔火，风从水面吹来。',
+      '21:00 · 站在栏杆边，觉得整个人被洗得干干净净。'
+    ]
+  };
+  var D2 = {
+    hp: [80, 80, 79, 79, 78, 78, 78, 77, 77, 77, 76, 76, 76, 75],
+    mp: [80, 79, 78, 77, 75, 73, 71, 12, 11, 10, 10, 9, 9, 9],
+    steps: [0, 600, 1400, 2300, 3200, 4100, 5000, 5900, 6800, 7700, 8600, 9500, 10400, 11300],
+    scene: [
+      '08:00 · 决定“放松一点”：不赶景点。',
+      '09:00 · 只是逛逛街，喝喝茶，买点小东西。',
+      '10:00 · 听上去，这像是给前一天的暴走还债。',
+      '11:00 · 进店、出店，橱窗和招牌轮流争夺注意力。',
+      '12:00 · 每一句闲聊都要接住，不能让谈话冷场。',
+      '13:00 · 吃什么、去哪家、她上次说过什么来着。',
+      '14:00 · 又是一个接着一个的小决定。',
+      '15:00 · 下午三点，坐在茶馆的角落里，忽然觉得整个人像被拔掉了电源。',
+      '16:00 · 盯着菜单发了三分钟的呆，一个字也读不进去。',
+      '17:00 · 邻桌的说笑声、后厨的锅铲声、门口小贩的吆喝声，一齐涌上来。',
+      '18:00 · “你昨天走了三万步都没事，今天这点路怎么就累成这样？”',
+      '19:00 · 我张了张嘴，想解释，却发现自己说不清楚。',
+      '20:00 · 腿几乎没有酸痛，心肺一点也不吃力。',
+      '21:00 · 可我确实累了，累得真真切切。'
+    ]
+  };
+
+  (function initTwoDays() {
+    var root = $('#cp-c1-two-days');
+    if (!root) return;
+    var day = 1;
+    var range = $('#c1-time', root);
+    var clock = $('#c1-clock', root);
+    var hpEl = $('#c1-hp', root), mpEl = $('#c1-mp', root);
+    var hpv = $('#c1-hpv', root), mpv = $('#c1-mpv', root);
+    var stepsEl = $('#c1-steps', root);
+    var scene = $('#c1-scene', root), out = $('#c1-out', root);
+
+    function render() {
+      var h = Number(range ? range.value : 8);
+      var i = clamp(h - 8, 0, 13);
+      var d = day === 1 ? D1 : D2;
+      var o = day === 1 ? D2 : D1;
+      txt(clock, (h < 10 ? '0' + h : h) + ':00');
+      bar(hpEl, d.hp[i]); bar(mpEl, d.mp[i]);
+      txt(hpv, d.hp[i]); txt(mpv, d.mp[i]);
+      txt(stepsEl, commas(d.steps[i]));
+      txt(scene, d.scene[i]);
+      txt(out, '同为 ' + (h < 10 ? '0' + h : h) + ':00 —— 第一天：血条 ' + D1.hp[i] + ' · 蓝条 ' + D1.mp[i] +
+        '；第二天：血条 ' + D2.hp[i] + ' · 蓝条 ' + D2.mp[i] + '。');
+    }
+
+    bindChips($$('[data-day]', root), function (c) { day = Number(c.getAttribute('data-day')); render(); });
+    on(range, 'input', render);
+    render();
+  })();
+
+  /* ══════════ 02 · 举证现场 ══════════ */
+  (function initEvidence() {
+    var root = $('#cp-c1-evidence');
+    if (!root) return;
+    var kind = 'mp';
+    var rows = $$('.step', root);
+    var out = $('#c1-ev-out', root);
+    var V = {
+      hp: ['能：腿酸、呼吸急促、心跳加速', '能：喘息、出汗、肌肉发沉', '能：大致知道休息多久可以恢复'],
+      mp: ['不能：没有红肿的脚踝，没有一处可以指给她看的“伤口”', '不能：没有急促的喘息，什么体征也没有', '不能：说不清，也拿不准']
+    };
+
+    function reset() {
+      rows.forEach(function (r) {
+        r.classList.remove('is-ok', 'is-no');
+        txt($('.step-v', r), '待检查');
+      });
+    }
+
+    function show(i, silent) {
+      var row = rows[i];
+      if (!row) return;
+      var pass = kind === 'hp';
+      row.classList.toggle('is-ok', pass);
+      row.classList.toggle('is-no', !pass);
+      txt($('.step-v', row), V[kind][i]);
+      if (!silent) summary();
+    }
+
+    function summary() {
+      var done = rows.filter(function (r) { return r.classList.contains('is-ok') || r.classList.contains('is-no'); }).length;
+      var pass = rows.filter(function (r) { return r.classList.contains('is-ok'); }).length;
+      var tail = kind === 'hp'
+        ? '结论：通过——你气喘吁吁地坐下，没有人会怀疑你。'
+        : '结论：证据不足——“你怎么可能累”，翻译过来就是：你的证据不够。';
+      txt(out, '检查 ' + done + '/3 · 通过 ' + pass + ' · ' + tail);
+    }
+
+    function runAll() {
+      reset();
+      var k = 0;
+      var timer = window.setInterval(function () {
+        show(k, true);
+        k++;
+        if (k >= 3) { window.clearInterval(timer); summary(); }
+      }, 130);
+    }
+
+    rows.forEach(function (r, i) { on(r, 'click', function () { show(i); }); });
+    bindChips($$('[data-kind]', root), function (c) { kind = c.getAttribute('data-kind'); runAll(); });
+    on($('#c1-ev-run', root), 'click', runAll);
+    summary();
+  })();
+
+  /* ══════════ 03 · 两条曲线上的两个人 ══════════ */
+  (function initTwoPeople() {
+    var root = $('#cp-c2-two-people');
+    if (!root) return;
+    var P = {
+      me: { name: '我', hp: 88, mp: 34, s1: '连着几天暴走三万步也不觉得苦。', s2: '一场需要高度投入的会议之后，需要很长时间才能缓过来。', s3: '下午三点像被拔掉了电源，盯着菜单一个字也读不进去。', out: '当前：我（血条厚、蓝条偏短）。山路上的赢家，茶馆里的输家。' },
+      ayuan: { name: '阿远', hp: 42, mp: 92, s1: '爬到半山腰就气喘吁吁，坐在石阶上摆手：“你们先走，我不行了。”', s2: '同时带三个项目，白天开会，晚上回邮件，眼睛依然发亮。', s3: '一场谈话里谈笑自如，从不让话掉在地上。', out: '当前：阿远（多线程选手）。会议室里的赢家，半山腰的输家。' }
+    };
+
+    function render(key) {
+      var p = P[key];
+      bar($('#c2-hp', root), p.hp); bar($('#c2-mp', root), p.mp);
+      txt($('#c2-hpv', root), p.hp); txt($('#c2-mpv', root), p.mp);
+      txt($('#c2-sc1', root), p.s1); txt($('#c2-sc2', root), p.s2); txt($('#c2-sc3', root), p.s3);
+      txt($('#c2-out', root), p.out);
+    }
+
+    bindChips($$('[data-who]', root), function (c) { render(c.getAttribute('data-who')); });
+  })();
+
+  /* ══════════ 04 · “累”这一家人 ══════════ */
+  (function initFamily() {
+    var root = $('#cp-c2-family');
+    if (!root) return;
+    var tabs = $$('.chip[role="tab"]', root);
+    var panels = [$('#c2f-p0', root), $('#c2f-p1', root)];
+    bindTabs(tabs, panels);
+
+    var NAMES = ['肌肉的酸胀', '注意力的涣散', '睡眠的亏欠', '情绪的耗尽', '心累（牵挂的重量）', '劳损（久坐、久视、久行）'];
+    var nodes = $$('.fam-node', root);
+    var lines = $$('.fam-links line', root);
+    var out = $('#c2f-out', root);
+
+    function pick(n) {
+      var near = [];
+      nodes.forEach(function (g) { g.classList.toggle('hot', Number(g.getAttribute('data-n')) === n); });
+      lines.forEach(function (l) {
+        var a = Number(l.getAttribute('data-a')), b = Number(l.getAttribute('data-b'));
+        var hit = a === n || b === n;
+        l.classList.toggle('hot', hit);
+        if (hit) near.push(NAMES[a === n ? b : a]);
+      });
+      txt(out, '「' + NAMES[n] + '」与 ' + near.map(function (s) { return '「' + s + '」'; }).join('、') +
+        ' 相似——可你找不出一条所有成员共有的本质。它们只有一种交叠的相似，像一家人的长相。');
+    }
+
+    nodes.forEach(function (g) {
+      var n = Number(g.getAttribute('data-n'));
+      clickable(g, function () { pick(n); });
+    });
+
+    var labor = $$('.labor', root);
+    var LAB = [
+      '久视伤血 —— 连“看”都被记在劳损的账上。',
+      '久卧伤气 —— 连“躺”也算。',
+      '久坐伤肉 —— 坐着不动，耗的是肌肉。',
+      '久立伤骨 —— 站着不动，耗的是骨。',
+      '久行伤筋 —— 走得太多，耗的是筋。'
+    ];
+    var laborOut = $('#c2f-labor', root);
+    labor.forEach(function (g) {
+      var i = Number(g.getAttribute('data-l'));
+      clickable(g, function () {
+        labor.forEach(function (o) { o.classList.toggle('hot', o === g); });
+        txt(laborOut, '《黄帝内经》五劳所伤：' + LAB[i]);
+      });
+    });
+  })();
+
+  /* ══════════ 05 · 三套系统接力 ══════════ */
+  (function initEnergy() {
+    var root = $('#cp-c3-energy');
+    if (!root) return;
+    var DUR = ['5 秒', '10 秒', '30 秒', '1 分钟', '2 分钟', '5 分钟', '10 分钟', '30 分钟', '1 小时', '2 小时', '3 小时'];
+    var SYS = [
+      [88, 10, 2], [80, 17, 3], [55, 40, 5], [30, 60, 10], [12, 68, 20],
+      [4, 55, 41], [2, 40, 58], [1, 20, 79], [0, 8, 92], [0, 4, 96], [0, 2, 98]
+    ];
+    var NOTE = [
+      '磷酸肌酸系统负责最初的爆发——肌肉里储存的 ATP 只够用几秒钟。',
+      '磷酸肌酸仍在支撑，糖酵解已经接手。',
+      '糖酵解系统开始提供中短时间的快速能量。',
+      '糖酵解占了上风：这是最“烧”的一段。',
+      '糖酵解仍在主导，有氧系统逐步上位。',
+      '有氧氧化系统开始承担主要输出。',
+      '有氧氧化系统负责长时间持续输出，呼吸与步伐可以同步。',
+      '有氧氧化系统主导——跑十公里、走三万步，靠的就是这一套。',
+      '它依赖心肺把氧气送到肌肉，再由线粒体把糖和脂肪“烧”成能量。',
+      '同一条有氧链路，撑住了整场长距离。',
+      '血条的上限，就是这条链路的总容量。'
+    ];
+    var range = $('#c3-t', root), dur = $('#c3-dur', root);
+    var pcr = $('#c3-pcr', root), gly = $('#c3-gly', root), ox = $('#c3-ox', root);
+    var pcrV = $('#c3-pcr-v', root), glyV = $('#c3-gly-v', root), oxV = $('#c3-ox-v', root);
+    var scene = $('#c3-scene', root), out = $('#c3-out', root);
+
+    function render() {
+      var i = clamp(Number(range ? range.value : 0), 0, 10);
+      var s = SYS[i];
+      bar(pcr, s[0]); bar(gly, s[1]); bar(ox, s[2]);
+      txt(pcrV, s[0] + '%'); txt(glyV, s[1] + '%'); txt(oxV, s[2] + '%');
+      txt(dur, DUR[i]);
+      txt(scene, NOTE[i]);
+      var lead = s[0] >= s[1] && s[0] >= s[2] ? '磷酸肌酸系统' : (s[1] >= s[2] ? '糖酵解系统' : '有氧氧化系统');
+      txt(out, '当前主导：' + lead + '（磷酸肌酸 ' + s[0] + '% · 糖酵解 ' + s[1] + '% · 有氧氧化 ' + s[2] + '%）。');
+    }
+
+    on(range, 'input', render);
+    render();
+  })();
+
+  /* ══════════ 06 · 走路：自动挡还是手动挡 ══════════ */
+  (function initBodyTech() {
+    var root = $('#cp-c3-body-tech');
+    if (!root) return;
+    var mode = 'auto', steps = 0;
+    var ticks = $$('#c3b-track i', root);
+    var mp = $('#c3b-mp', root), mpv = $('#c3b-mpv', root);
+    var out = $('#c3b-out', root), cnt = $('#c3b-steps', root);
+    var walk = $('#c3b-walk', root), reset = $('#c3b-reset', root);
+
+    function render() {
+      var cost = mode === 'auto' ? 1 : 7;
+      var used = steps / 1000 * cost;
+      var left = clamp(100 - used, 0, 100);
+      bar(mp, left); txt(mpv, Math.round(left));
+      ticks.forEach(function (t, i) { t.classList.toggle('on', i < steps / 1000); });
+      txt(cnt, commas(steps) + ' 步');
+      if (steps === 0) {
+        txt(out, mode === 'auto'
+          ? '自动挡：1000 步 ≈ 蓝条 -1。身体在做功，心神在休息。'
+          : '手动挡：1000 步 ≈ 蓝条 -7。每一步都要大脑逐步过问，很贵。');
+        return;
+      }
+      if (mode === 'auto') {
+        txt(out, '已走 ' + commas(steps) + ' 步 · 蓝条 -' + fix(used, 0) + '（剩 ' + Math.round(left) + '）。走路这件事早已外包给自动化的程序，不再需要大脑逐步过问。');
+      } else if (left <= 0) {
+        txt(out, '已走 ' + commas(steps) + ' 步 · 蓝条见底。手动挡撑不住了：把每一步都交给意识，等于同时开着几十条线。');
+      } else {
+        txt(out, '已走 ' + commas(steps) + ' 步 · 蓝条 -' + fix(used, 0) + '（剩 ' + Math.round(left) + '）。每一步都在想：先迈哪只脚、重心放哪、会不会撞到人。');
+      }
+    }
+
+    bindChips($$('[data-mode]', root), function (c) { mode = c.getAttribute('data-mode'); steps = 0; render(); });
+    on(walk, 'click', function () { if (steps < 12000) steps += 1000; render(); });
+    on(reset, 'click', function () { steps = 0; render(); });
+    render();
+  })();
+
+  /* ══════════ 07 · 血条见底：两处故障点 ══════════ */
+  (function initFatigueTypes() {
+    var root = $('#cp-c3-fatigue-types');
+    if (!root) return;
+    bindTabs($$('.chip[role="tab"]', root), [$('#c3f-p0', root), $('#c3f-p1', root)]);
+
+    var quiz = $$('#c3f-quiz .q', root);
+    var out = $('#c3f-out', root);
+    var done = 0;
+
+    quiz.forEach(function (b) {
+      var orig = b.textContent;
+      on(b, 'click', function () {
+        if (b.dataset.done === '1') return;
+        b.dataset.done = '1';
+        b.dataset.state = 'ok';
+        b.classList.add('is-on', 'is-ok');
+        b.textContent = orig + ' · ' + b.getAttribute('data-ans');
+        done++;
+        var marks = quiz.map(function (q) { return q.dataset.done === '1' ? q.getAttribute('data-ans') : '—'; });
+        txt(out, '已作答 ' + done + '/4 · 归类：① ' + marks[0] + ' ② ' + marks[1] + ' ③ ' + marks[2] + ' ④ ' + marks[3]);
+      });
+    });
+  })();
+
+  /* ══════════ 08 · 前额叶：四个吃蓝条的活 ══════════ */
+  (function initPrefrontal() {
+    var root = $('#cp-c4-prefrontal');
+    if (!root) return;
+    var panels = [$('#c4p-p0', root), $('#c4p-p1', root), $('#c4p-p2', root), $('#c4p-p3', root)];
+    var decStart = 0;
+    bindTabs($$('.chip[role="tab"]', root), panels, function (i) {
+      if (i === 3) decStart = Date.now();
+    });
+
+    // ① 工作记忆
+    var MEM = ['回邮件', '取快递', '订车票', '回访客户', '买牙膏'];
+    var FOIL = ['还书', '预约体检', '缴电费'];
+    var show = $('#c4p-wm-show', root), pick = $('#c4p-wm-pick', root);
+    var wmOut = $('#c4p-wm-out', root);
+    var chosen = [];
+
+    on($('#c4p-wm-start', root), 'click', function () {
+      chosen = [];
+      if (!show) return;
+      show.hidden = false;
+      show.innerHTML = MEM.map(function (m) { return '<span class="chip">' + m + '</span>'; }).join('');
+      if (pick) { pick.hidden = true; pick.innerHTML = ''; }
+      txt(wmOut, '记住这五件事——它们会在三秒后消失。');
+      window.setTimeout(function () {
+        show.hidden = true;
+        var all = MEM.concat(FOIL);
+        for (var i = all.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = all[i]; all[i] = all[j]; all[j] = t; }
+        if (pick) {
+          pick.hidden = false;
+          pick.innerHTML = all.map(function (m) { return '<button class="chip m" type="button">' + m + '</button>'; }).join('');
+          $$('.chip.m', pick).forEach(function (b) {
+            on(b, 'click', function () {
+              if (b.classList.contains('is-on')) return;
+              b.classList.add('is-on');
+              chosen.push(b.textContent);
+              txt(wmOut, '已选出 ' + chosen.length + '/5 —— 从八个里挑出刚才那五件事。');
+              if (chosen.length >= 5) {
+                var hit = chosen.filter(function (x) { return MEM.indexOf(x) >= 0; }).length;
+                txt(wmOut, '五件里记住 ' + hit + ' 件。工作记忆就是在脑子里同时保持几个信息——它的容量本来就很有限。');
+              }
+            });
+          });
+        }
+        txt(wmOut, '它们消失了。现在从下面八个里，选出刚才那五件事。');
+      }, 3000);
+    });
+
+    // ② 抑制控制
+    var inhBtn = $('#c4p-inh-btn', root), inhOut = $('#c4p-inh-out', root);
+    var inhTimer = null, inhLeft = 0;
+    on($('#c4p-inh-go', root), 'click', function () {
+      if (inhTimer) return;
+      inhLeft = 5;
+      if (inhBtn) inhBtn.disabled = false;
+      txt(inhOut, '还有 5 秒。忍住——请把手放下来。');
+      inhTimer = window.setInterval(function () {
+        inhLeft--;
+        if (inhLeft <= 0) {
+          window.clearInterval(inhTimer); inhTimer = null;
+          if (inhBtn) inhBtn.disabled = true;
+          txt(inhOut, '压住了：五秒里你都没有点。抑制控制工作正常——它压下的正是“想做点什么”的冲动。');
+        } else {
+          txt(inhOut, '还有 ' + inhLeft + ' 秒。忍住——请把手放下来。');
+        }
+      }, 1000);
+    });
+    on(inhBtn, 'click', function () {
+      if (inhTimer) { window.clearInterval(inhTimer); inhTimer = null; }
+      txt(inhOut, '冲动赢了：手指比“不要”快。这五秒钟花掉的，就是抑制控制。');
+      if (inhBtn) inhBtn.disabled = true;
+    });
+
+    // ③ 认知灵活性
+    var sw = 0;
+    on($('#c4p-sw-go', root), 'click', function () {
+      sw = Math.min(5, sw + 1);
+      var rule = sw % 2 === 0 ? 'A（数字奇偶）' : 'B（字母元音）';
+      txt($('#c4p-sw-out', root), '累计切换成本 ' + fix(sw * 0.35, 2) + ' 秒 · 切换 ' + sw + ' 次 · 当前规则 ' + rule +
+        (sw >= 5 ? '。规则一换，脑子就要重新加载一次。' : ''));
+    });
+
+    // ④ 计划与决策
+    var dishes = $$('#c4p-dec-menu .d', root);
+    dishes.forEach(function (d) {
+      on(d, 'click', function () {
+        var sec = (Date.now() - decStart) / 1000;
+        dishes.forEach(function (o) { o.classList.toggle('is-on', o === d); });
+        txt($('#c4p-dec-out', root), '你选了「' + d.textContent + '」，这一次决定花了 ' + fix(sec, 1) + ' 秒。可每一个都是小决策，每一个都需要注意力、记忆与社会判断。');
+        decStart = Date.now();
+      });
+    });
+  })();
+
+  /* ══════════ 09 · 蓝条的记账方式 ══════════ */
+  (function initGlutamate() {
+    var root = $('#cp-c4-glutamate');
+    if (!root) return;
+    bindTabs($$('.chip[role="tab"]', root), [$('#c4g-p0', root), $('#c4g-p1', root)]);
+
+    var range = $('#c4g-h', root);
+    var NOTE = [
+      '基线状态：外侧前额叶的谷氨酸浓度平稳，努力程度满格。',
+      '一小时：还感觉不到什么。',
+      '两小时：开始想切换任务。',
+      '三小时：选择时已经偏向省力、廉价的选项。',
+      '四小时：谷氨酸浓度明显升高，继续运转变得更“贵”。',
+      '五小时：瞳孔反应提示努力程度在下降。',
+      '六小时以上：大脑在为自己的控制系统记账——你只想偷懒、想切换、想休息。'
+    ];
+    function render() {
+      var i = clamp(Number(range ? range.value : 0), 0, 13);
+      var h = i * 0.5;
+      var glu = 12 + i * 6.2, cheap = 10 + i * 6.4, pupil = 96 - i * 6.1;
+      bar($('#c4g-glu', root), glu); bar($('#c4g-cheap', root), cheap); bar($('#c4g-pupil', root), pupil);
+      txt($('#c4g-hour', root), fix(h, 1) + ' 小时');
+      txt($('#c4g-glu-v', root), i === 0 ? '基线' : '+' + fix(i * 6.2, 0) + '%');
+      txt($('#c4g-cheap-v', root), Math.round(cheap) + '%');
+      txt($('#c4g-pupil-v', root), Math.round(pupil) + '%');
+      txt($('#c4g-out', root), NOTE[clamp(Math.floor(i / 2.2), 0, 6)] + '（高负荷组 n 小时后：谷氨酸 +' + fix(i * 6.2, 0) + '% · 廉价选项倾向 ' + Math.round(cheap) + '% · 努力程度 ' + Math.round(pupil) + '%）');
+    }
+    on(range, 'input', render);
+    render();
+
+    var items = $$('#c4g-items .x', root), out2 = $('#c4g-items-out', root), total = 0, n = 0;
+    items.forEach(function (b) {
+      on(b, 'click', function () {
+        if (b.classList.contains('is-on')) return;
+        b.classList.add('is-on');
+        total += Number(b.getAttribute('data-cost'));
+        n++;
+        var tail = n >= 3 ? ' 累积起来，足以让一个人在下午三点的茶馆里说不出晚饭想吃什么。' : '';
+        txt(out2, '已记 ' + n + ' 笔 · 合计花掉约 ' + total + ' 点蓝条——单看每一笔都微不足道。' + tail);
+      });
+    });
+  })();
+
+  /* ══════════ 10 · 线性路 vs 岔路 ══════════ */
+  (function initPath() {
+    var root = $('#cp-c5-path');
+    if (!root) return;
+    var path = 'linear', step = 0, MAX = 12;
+    var stage = $('#c5p-stage', root), ticks = $('#c5p-ticks', root);
+    if (ticks) {
+      var html = '';
+      for (var i = 0; i < MAX; i++) html += '<circle cx="' + (32 + i * 40) + '" cy="160" r="4"></circle>';
+      ticks.innerHTML = html;
+    }
+    var dots = $$('#c5p-ticks circle', root);
+
+    function render() {
+      if (stage) {
+        stage.classList.toggle('cp-mode-linear', path === 'linear');
+        stage.classList.toggle('cp-mode-tree', path === 'tree');
+      }
+      dots.forEach(function (d, i) { d.classList.toggle('on', i < step); });
+      var cost = path === 'linear' ? 0.5 : 6;
+      var left = clamp(100 - step * cost, 0, 100);
+      bar($('#c5p-mp', root), left);
+      txt($('#c5p-mpv', root), Math.round(left));
+      txt($('#c5p-count', root), step + ' / ' + MAX + ' 步');
+      txt($('#c5p-dec', root), path === 'linear' ? '0' : String(step * 3));
+      if (step === 0) {
+        txt($('#c5p-out', root), path === 'linear'
+          ? '线性路线：路线几乎是线性的，往前走就行——每一步的反馈都是即时的，蓝条几乎不动。'
+          : '岔路：每走一步都要先做一个决定，三个选项在等你——注意力、记忆与社会判断都要上场。');
+        return;
+      }
+      if (path === 'linear') {
+        txt($('#c5p-out', root), '已走 ' + step + ' 步 · 蓝条 -' + fix(step * 0.5, 1) + '。没有人需要我回应，没有选择需要我权衡，大脑可以放下“控制”。');
+      } else {
+        txt($('#c5p-out', root), '已走 ' + step + ' 步 · 蓝条 -' + fix(step * 6, 0) + '，已积下 ' + (step * 3) + ' 个待决策。每一个都是小决策：往哪个方向逛、这家店进不进去、她是不是有点累了。');
+      }
+    }
+
+    bindChips([$('#c5p-linear', root), $('#c5p-tree', root)], function (c) {
+      path = c.getAttribute('data-path'); step = 0; render();
+    });
+    on($('#c5p-step', root), 'click', function () { if (step < MAX) step++; render(); });
+    on($('#c5p-reset', root), 'click', function () { step = 0; render(); });
+    render();
+  })();
+
+  /* ══════════ 11 · 逛街里的三股消耗 ══════════ */
+  (function initForces() {
+    var root = $('#cp-c5-three-forces');
+    if (!root) return;
+    var dec = $('#c5f-dec', root), soc = $('#c5f-soc', root), env = $('#c5f-env', root);
+
+    function render(fromPreset) {
+      var d = Number(dec.value), s = Number(soc.value), e = Number(env.value);
+      txt($('#c5f-dec-v', root), d); txt($('#c5f-soc-v', root), s); txt($('#c5f-env-v', root), e);
+      var cost = clamp(d * 0.45 + s * 0.35 + e * 0.2, 0, 100);
+      var hpSpend = clamp(20 + (100 - d) * 0.75, 0, 100);
+      bar($('#c5f-cost', root), cost); bar($('#c5f-hp', root), hpSpend);
+      txt($('#c5f-cost-v', root), Math.round(cost)); txt($('#c5f-hp-v', root), Math.round(hpSpend));
+      var head = fromPreset ? '' : '';
+      var main = (d >= s && d >= e) ? '最耗你的是决策：“往哪个方向逛”“这件衣服要不要买”——每一个都是小决策。'
+        : (s >= e ? '最耗你的是人：只要有他人在场，我们就在做印象管理，还要付出没有工资的情绪劳动。'
+          : '最耗你的是环境：招牌、叫卖声、人流、橱窗，全在争夺注意力——而作为游客，你偏偏不能冷淡。');
+      txt($('#c5f-out', root), head + '蓝条支出 ' + Math.round(cost) + '/100 · 血条支出 ' + Math.round(hpSpend) + '/100。' + main);
+    }
+
+    [dec, soc, env].forEach(function (r) { on(r, 'input', function () { render(false); }); });
+    bindChips([$('#c5f-p1', root), $('#c5f-p2', root)], function (c) {
+      var p = c.getAttribute('data-preset');
+      if (p === 'day1') { dec.value = 8; soc.value = 10; env.value = 12; }
+      else { dec.value = 82; soc.value = 74; env.value = 88; }
+      render(true);
+    });
+    render(false);
+  })();
+
+  /* ══════════ 12 · Marcora 实验 ══════════ */
+  (function initMarcora() {
+    var root = $('#cp-c6-marcora');
+    if (!root) return;
+    var arm = 'doc';
+    var R = {
+      doc: { time: 10.5, rpe: 16.0, hr: 167, la: 8.0, vo2: 3.2, out: '纪录片组：10.5 分钟后力竭，主观用力感 16.0。同样的功率，大脑不觉得那么吃力。' },
+      cog: { time: 8.2, rpe: 18.5, hr: 168, la: 8.1, vo2: 3.2, out: '认知疲劳的那一次，人们平均更早放弃了：8.2 分钟 vs 10.5 分钟。心率、血乳酸、摄氧量几乎一样，唯一不同的是主观用力感。' }
+    };
+    bindChips($$('[data-arm]', root), function (c) {
+      arm = c.getAttribute('data-arm');
+      txt($('#c6m-state', root), '已选：' + c.textContent + '，等待骑行');
+    });
+    on($('#c6m-ride', root), 'click', function () {
+      var r = R[arm];
+      bar($('#c6m-time', root), r.time / 12 * 100); txt($('#c6m-time-v', root), fix(r.time, 1) + ' 分');
+      bar($('#c6m-rpe', root), (r.rpe - 10) / 10 * 100); txt($('#c6m-rpe-v', root), fix(r.rpe, 1));
+      txt($('#c6m-hr', root), r.hr + ' bpm');
+      txt($('#c6m-la', root), fix(r.la, 1) + ' mmol/L');
+      txt($('#c6m-vo2', root), fix(r.vo2, 1) + ' L/min');
+      txt($('#c6m-state', root), '测试完成');
+      txt($('#c6m-out', root), r.out);
+    });
+  })();
+
+  /* ══════════ 13 · 莫索的手指测力计 ══════════ */
+  (function initErgo() {
+    var root = $('#cp-c6-ergograph');
+    if (!root) return;
+    var mode = 'rest', rep = 0, pts = [];
+    var line = $('#c6e-line', root), out = $('#c6e-out', root), cnt = $('#c6e-count', root);
+    var lift = $('#c6e-lift', root);
+
+    function height(r) {
+      var decay = mode === 'rest' ? 3.2 : 6.5;
+      return Math.max(8, 100 - r * decay);
+    }
+    function draw() {
+      if (line) line.setAttribute('points', pts.join(' '));
+    }
+    function render() {
+      txt(cnt, rep + ' 次');
+      var h = height(rep);
+      if (rep === 0) {
+        txt(out, mode === 'rest'
+          ? '高度 100% · 还能继续。点“举起手指”逐次记录。'
+          : '高度 100% · 但要记住：这一次是繁重的脑力劳动之后。');
+        return;
+      }
+      if (h <= 8.5) {
+        txt(out, '再也举不动了：一共 ' + rep + ' 次。' + (mode === 'brain' ? '脑力劳动之后，同一根手指能举起的次数明显减少——“脑子累了，手指也没劲”。' : '休息之后，这根手指更耐久一些。'));
+        if (lift) lift.disabled = true;
+      } else {
+        txt(out, '第 ' + rep + ' 次 · 举起高度 ' + Math.round(h) + '%' + (mode === 'brain' ? '（脑力劳动之后，曲线掉得更快）' : ''));
+      }
+    }
+    bindChips($$('[data-mode]', root), function (c) {
+      mode = c.getAttribute('data-mode');
+      rep = 0; pts = []; draw();
+      if (lift) lift.disabled = false;
+      render();
+    });
+    on(lift, 'click', function () {
+      rep++;
+      var h = height(rep);
+      var x = 32 + rep * (468 / 28);
+      var y = 150 - h / 100 * 130;
+      pts.push(fix(x, 1) + ',' + fix(y, 1));
+      draw();
+      render();
+    });
+    on($('#c6e-reset', root), 'click', function () {
+      rep = 0; pts = []; draw();
+      if (lift) lift.disabled = false;
+      render();
+    });
+    render();
+  })();
+
+  /* ══════════ 14 · 总开关与预算报告 ══════════ */
+  (function initBudget() {
+    var root = $('#cp-c6-budget');
+    if (!root) return;
+    var sleep = $('#c6b-sleep', root), stress = $('#c6b-stress', root), expect = $('#c6b-expect', root);
+
+    function render() {
+      var sl = Number(sleep.value), st = Number(stress.value), ex = Number(expect.value);
+      txt($('#c6b-sleep-v', root), fix(sl, 1) + ' h');
+      txt($('#c6b-stress-v', root), st);
+      txt($('#c6b-expect-v', root), ex < 30 ? '厌烦' : (ex > 70 ? '期待' : '中立'));
+      var mpLen = clamp(40 + (sl - 4) * 10 - st * 0.12 + (ex - 50) * 0.12, 5, 100);
+      var hpRec = clamp(30 + (sl - 4) * 13, 5, 100);
+      bar($('#c6b-mp', root), mpLen); bar($('#c6b-hp', root), hpRec);
+      txt($('#c6b-mpv', root), Math.round(mpLen)); txt($('#c6b-hpv', root), Math.round(hpRec));
+      var say;
+      if (sl <= 5.5) say = '睡眠不足：肌肉恢复变慢，反应速度下降，前额叶功能受损，情绪也更容易失控——两条条被同时拉低。';
+      else if (ex < 30) say = '同一具身体，今天“累得动不了”：预算报告把“预期”也算进去了。';
+      else if (ex > 70) say = '同一具身体，今天“不累”：在你期待的活动面前，同样的身体状态可以是另一种读数。';
+      else say = '今天的读数：蓝条 ' + Math.round(mpLen) + ' · 血条恢复 ' + Math.round(hpRec) + '。';
+      txt($('#c6b-out', root), say);
+    }
+
+    [sleep, stress, expect].forEach(function (r) { on(r, 'input', render); });
+    bindChips($$('[data-set]', root), function (c) {
+      var k = c.getAttribute('data-set');
+      if (k === 'short') { sleep.value = 5; stress.value = 70; expect.value = 40; }
+      else if (k === 'full') { sleep.value = 8; stress.value = 25; expect.value = 60; }
+      else if (k === 'dread') { sleep.value = 7; stress.value = 65; expect.value = 12; }
+      else { sleep.value = 7.5; stress.value = 30; expect.value = 92; }
+      render();
+    });
+    render();
+  })();
+
+  /* ══════════ 15 · 多实验室重复 ══════════ */
+  (function initReplication() {
+    var root = $('#cp-c7-replication');
+    if (!root) return;
+    var box = $('#c7r-bars', root), out = $('#c7r-out', root);
+    var REP = [0.08, -0.05, 0.11, 0.02, -0.09, 0.06, 0.01, -0.04, 0.09, -0.02, 0.05, 0.03,
+      -0.07, 0.04, 0.1, -0.03, 0.02, 0.07, -0.06, 0.01, 0.05, -0.08, 0.03, 0.06];
+    var ORIG = [0.68, 0.75, 0.62];
+
+    function draw(view) {
+      if (!box) return;
+      var svgns = 'http://www.w3.org/2000/svg';
+      box.innerHTML = '';
+      var zero = 140;
+      if (view === 'orig') {
+        ORIG.forEach(function (v, i) {
+          var r = document.createElementNS(svgns, 'rect');
+          var h = v * 130;
+          r.setAttribute('x', String(96 + i * 120));
+          r.setAttribute('y', String(zero - h));
+          r.setAttribute('width', '70');
+          r.setAttribute('height', String(h));
+          r.setAttribute('rx', '4');
+          r.setAttribute('class', 'orig');
+          box.appendChild(r);
+          var t = document.createElementNS(svgns, 'text');
+          t.setAttribute('x', String(131 + i * 120));
+          t.setAttribute('y', String(zero - h - 8));
+          t.setAttribute('class', 'tick');
+          t.textContent = 'd = ' + v.toFixed(2);
+          box.appendChild(t);
+        });
+        var cap = document.createElementNS(svgns, 'text');
+        cap.setAttribute('x', '48'); cap.setAttribute('y', '192');
+        cap.setAttribute('class', 'cap');
+        cap.textContent = '原始实验：效应显著（1990s）';
+        box.appendChild(cap);
+        txt(out, '原始实验：意志力像肌肉，用多了就会疲劳，或者像一箱油，用完了就没有了——一度非常有影响力。');
+      } else {
+        REP.forEach(function (v, i) {
+          var r = document.createElementNS(svgns, 'rect');
+          var h = Math.max(2, Math.abs(v) * 130);
+          var x = 52 + i * 19;
+          r.setAttribute('x', String(x));
+          r.setAttribute('y', String(v >= 0 ? zero - h : zero));
+          r.setAttribute('width', '12');
+          r.setAttribute('height', String(h));
+          r.setAttribute('rx', '2');
+          r.setAttribute('class', v < 0 ? 'neg' : '');
+          box.appendChild(r);
+        });
+        var cap2 = document.createElementNS(svgns, 'text');
+        cap2.setAttribute('x', '48'); cap2.setAttribute('y', '192');
+        cap2.setAttribute('class', 'cap');
+        cap2.textContent = '二十多个实验室 · 两千多名被试：效应几乎接近于零';
+        box.appendChild(cap2);
+        txt(out, '二十多个实验室、两千多名被试：这一效应几乎接近于零。不宜把心理资源想象成一个固定容量、会被机械耗光的油箱。');
+      }
+    }
+    bindChips([$('#c7r-orig', root), $('#c7r-rep', root)], function (c) { draw(c.getAttribute('data-view')); });
+    draw('orig');
+  })();
+
+  /* ══════════ 16 · 成本—收益 ══════════ */
+  (function initCostBenefit() {
+    var root = $('#cp-c7-cost-benefit');
+    if (!root) return;
+    var mot = $('#c7c-mot', root), int_ = $('#c7c-int', root), mng = $('#c7c-mng', root);
+
+    function render(fromTask) {
+      var m = Number(mot.value), i = Number(int_.value), g = Number(mng.value);
+      txt($('#c7c-mot-v', root), m); txt($('#c7c-int-v', root), i); txt($('#c7c-mng-v', root), g);
+      var hours = clamp(0.4 + (m + i + g) / 300 * 11, 0.4, 11.5);
+      bar($('#c7c-span', root), hours / 11.5 * 100);
+      txt($('#c7c-span-v', root), fix(hours, 1) + ' h');
+      txt($('#c7c-price', root), hours > 7 ? '划算' : (hours > 3 ? '一般' : '很贵'));
+      var head = fromTask === 'write' ? '一个热爱写作的人可以连写十小时而甘之如饴。'
+        : fromTask === 'sheet' ? '同样一个人，做一个自己毫无兴趣的报表，一小时就想逃跑。'
+          : fromTask === 'club' ? '他能在读书会上滔滔不绝讲三个小时。'
+            : fromTask === 'claim' ? '却会把一张报销单拖上一个星期。' : '';
+      txt($('#c7c-out', root), head + '按这个估价，这件事能撑 ' + fix(hours, 1) + ' 小时——大脑并不是没油了才叫你停，而是在不断评估：继续做这件事，值不值得？');
+    }
+
+    [mot, int_, mng].forEach(function (r) { on(r, 'input', function () { render(''); }); });
+    bindChips($$('[data-task]', root), function (c) {
+      var t = c.getAttribute('data-task');
+      if (t === 'write') { mot.value = 95; int_.value = 96; mng.value = 92; }
+      else if (t === 'sheet') { mot.value = 12; int_.value = 5; mng.value = 8; }
+      else if (t === 'club') { mot.value = 88; int_.value = 94; mng.value = 82; }
+      else { mot.value = 20; int_.value = 10; mng.value = 14; }
+      render(t);
+    });
+    render('');
+  })();
+
+  /* ══════════ 17 · 什么时候不该只用比喻解释 ══════════ */
+  (function initRedflag() {
+    var root = $('#cp-c7-redflag');
+    if (!root) return;
+    var boxes = $$('#c7f-list input', root), out = $('#c7f-out', root);
+    function render() {
+      var n = boxes.filter(function (b) { return b.checked; }).length;
+      if (n === 0) txt(out, '已标记 0 项 · 比喻可以帮你开口，但不能代替检查。');
+      else txt(out, '已标记 ' + n + ' 项 · 建议寻求专业评估：这不是性格问题，也不是“意志力不够”。比喻是理解世界的工具，不是拒绝检查的理由。');
+    }
+    boxes.forEach(function (b) { on(b, 'change', render); });
+    render();
+  })();
+
+  /* ══════════ 18 · “累”的编年史 ══════════ */
+  (function initTimeline() {
+    var root = $('#cp-c8-timeline');
+    if (!root) return;
+    var all = $$('.tl', root), out = $('#c8t-out', root);
+    all.forEach(function (d) {
+      on(d, 'toggle', function () {
+        if (d.open) {
+          all.forEach(function (o) { if (o !== d) o.open = false; });
+          var s = $('summary b', d), t = $('summary span', d);
+          txt(out, '正在看：' + (s ? s.textContent : '') + '——' + (t ? t.textContent : '') + '。');
+        } else {
+          txt(out, '展开任意一条：同一个字，在不同的年代装着不同的东西。');
+        }
+      });
+    });
+  })();
+
+  /* ══════════ 19 · 豁免券窗口 ══════════ */
+  (function initExemption() {
+    var root = $('#cp-c8-exemption');
+    if (!root) return;
+    var app = 'mp';
+    var R = {
+      mp: ['拿不出：没有红肿的脚踝，没有急促的喘息，没有“伤口”', '无法指认：连自己都说不清累在哪里', '愿意配合，但仍然没有证据'],
+      hp: ['齐全：体温、化验单、绷带，越具体越容易通过', '可以指认：腿酸、呼吸急促、心跳加速', '愿意配合']
+    };
+    function render() {
+      var rids = ['#c8e-r0', '#c8e-r1', '#c8e-r2'];
+      R[app].forEach(function (s, i) { txt($(rids[i], root), s); });
+      txt($('#c8e-out', root), app === 'mp'
+        ? '申请者 A：蓝条见底。三条要求里，一条都拿不出证明。'
+        : '申请者 B：血条见底。证据齐全，符合“病人角色”的全部条件。');
+      txt($('#c8e-state', root), '待提交');
+    }
+    bindChips($$('[data-app]', root), function (c) { app = c.getAttribute('data-app'); render(); });
+    on($('#c8e-apply', root), 'click', function () {
+      txt($('#c8e-state', root), app === 'mp' ? '已被拒' : '已通过');
+      txt($('#c8e-out', root), app === 'mp'
+        ? '被拒。“你怎么可能累”，翻译过来就是：你的证据不够。'
+        : '通过。血条见底自带证据，你气喘吁吁地坐下，没有人会怀疑你。');
+    });
+    render();
+  })();
+
+  /* ══════════ 20 · 认知劳动：四个环节 ══════════ */
+  (function initCognitiveLabor() {
+    var root = $('#cp-c8-cognitive-labor');
+    if (!root) return;
+    var out = $('#c8c-out', root);
+    var TEXT = [
+      '预见有什么需要——晚饭想吃什么？这句体贴的话，本身就是一份待办。',
+      '识别有哪些选择——把选项列出来，也是一笔支出。',
+      '做出决定——每一个都是小决策，需要注意力、记忆与社会判断。',
+      '盯着结果落实——盯着它完成，是最后一笔。'
+    ];
+    var steps = $$('.step', root), done = 0;
+    steps.forEach(function (s, i) {
+      on(s, 'click', function () {
+        if (!s.classList.contains('is-ok')) { s.classList.add('is-ok'); done++; }
+        txt($('.step-v', s), '已认领');
+        txt(out, TEXT[i] + '（已认领 ' + done + '/4 个环节）');
+      });
+    });
+    var g = $('#c8c-gender', root);
+    on(g, 'click', function () {
+      var on_ = g.getAttribute('aria-pressed') !== 'true';
+      g.setAttribute('aria-pressed', on_ ? 'true' : 'false');
+      g.classList.toggle('is-on', on_);
+      txt(out, on_
+        ? '在异性伴侣中，前面的预见和后面的盯办，更多是由女性承担的——这些劳动同样不出汗，也几乎不会被记入功劳簿。'
+        : '四个环节：预见有什么需要，识别有哪些选择，做出决定，再盯着结果落实。');
+    });
+    var d = $('#c8c-dinner', root);
+    on(d, 'click', function () {
+      txt(out, '“晚饭想吃什么？”——一句再体贴不过的话，恰恰是一个待办的决策，一笔要当场结清的账（蓝条 -8）。这里没有谁做错了什么，只是体贴的形式，有时恰好就是蓝条的支出。');
+    });
+  })();
+
+  /* ══════════ 21 · 他心：蝙蝠与甲虫 ══════════ */
+  (function initOtherMinds() {
+    var root = $('#cp-c9-other-minds');
+    if (!root) return;
+    bindTabs($$('.chip[role="tab"]', root), [$('#c9o-p0', root), $('#c9o-p1', root)]);
+
+    var tries = 0, out = $('#c9o-out', root);
+    on($('#c9o-try', root), 'click', function () {
+      tries++;
+      txt(out, tries < 3
+        ? '第 ' + tries + ' 次尝试：仍然只能通过语言、表情和行为间接推测。'
+        : '第 ' + tries + ' 次尝试：你可以了解回声定位在物理上如何运作，却永远无法真正知道“作为蝙蝠”是什么滋味。');
+    });
+
+    var boxOut = $('#c9o-box-out', root);
+    $$('#c9o-boxes .b', root).forEach(function (b) {
+      on(b, 'click', function () {
+        if (b.getAttribute('data-box') === 'mine') {
+          txt(boxOut, '我的盒子打开了：里面是什么，只有我知道——它甚至可能是空的。');
+        } else {
+          txt(boxOut, '打不开。里面装着什么，你我永远无法核对；“甲虫”这个词的意义也不取决于它。');
+        }
+      });
+    });
+    on($('#c9o-rule', root), 'click', function () {
+      txt(boxOut, '我们靠一条默认的使用规则：别人说累的时候，认真对待。规则一旦松动，“累”就会退化成一场彼此举证的官司。');
+    });
+  })();
+
+  /* ══════════ 22 · 庖丁解牛 ══════════ */
+  (function initCook() {
+    var root = $('#cp-c9-cook');
+    if (!root) return;
+    var way = 'gap';
+    var range = $('#c9k-prog', root);
+    var blade = $('#c9k-blade', root);
+    var routes = { gap: $('#c9k-r-gap', root), chop: $('#c9k-r-chop', root) };
+
+    function render() {
+      var p = clamp(Number(range ? range.value : 0), 0, 100);
+      txt($('#c9k-prog-v', root), Math.round(p) + '%');
+      var path = routes[way];
+      if (blade && path && path.getTotalLength) {
+        var len = path.getTotalLength();
+        var pt = path.getPointAtLength(len * p / 100);
+        blade.setAttribute('cx', fix(pt.x, 1));
+        blade.setAttribute('cy', fix(pt.y, 1));
+      }
+      var wear, wearTxt, msg;
+      if (way === 'gap') {
+        wear = 2; wearTxt = '如新';
+        msg = p >= 100
+          ? '顺到底了：依乎天理，批大郤，导大窾，因其固然——刀用了十九年而刀刃如新。'
+          : '依乎天理：顺着牛身体本来的结构下刀，不硬砍，不蛮撬。';
+      } else {
+        wear = 2 + p * 0.98;
+        wearTxt = Math.round(wear) + '%';
+        msg = p < 34 ? '硬砍：刀锋正对着第一个骨节，第一下就开始较劲。'
+          : (p < 67 ? '越过第 3 个骨节，刀刃已经卷了口。' : '一路砍到底：不是刀不够好，是它一直在和结构对抗。');
+      }
+      bar($('#c9k-wear', root), wear); txt($('#c9k-wear-v', root), wearTxt);
+      txt($('#c9k-out', root), msg);
+    }
+
+    bindChips([$('#c9k-gap', root), $('#c9k-chop', root)], function (c) { way = c.getAttribute('data-way'); render(); });
+    on(range, 'input', render);
+    render();
+  })();
+
+  /* ══════════ 23 · 从“你不可以”到“你能够” ══════════ */
+  (function initMerit() {
+    var root = $('#cp-c9-merit');
+    if (!root) return;
+    var S = {
+      disc: { src: '外部的规定与禁令', slogan: '你不可以', stop: '可以停——你被允许停', mean: '你尽了责', out: '规训社会：压力来自外部，疲惫有借口的余地，也有可以指认的“禁令”。' },
+      merit: { src: '自我驱动与自我优化', slogan: '你能够', stop: '停不下来——没有人禁止你，你却不敢停', mean: '你在竞争中落后了', out: '功绩社会：人不再被外力压迫，而是被自我驱动，不断地自我优化、自我剥削。一个人如果承认自己蓝条短，似乎就是承认自己在竞争中落后。' }
+    };
+    function apply(k) {
+      var s = S[k];
+      txt($('#c9m-src', root), s.src); txt($('#c9m-slogan', root), s.slogan);
+      txt($('#c9m-stop', root), s.stop); txt($('#c9m-mean', root), s.mean);
+      txt($('#c9m-out', root), s.out);
+    }
+    bindChips([$('#c9m-disc', root), $('#c9m-merit', root)], function (c) { apply(c.getAttribute('data-soc')); });
+
+    var cards = $('#c9m-cards', root);
+    var loopTimer = null;
+    on($('#c9m-loop', root), 'click', function () {
+      var seq = ['自我驱动', '自我优化', '自我剥削'], i = 0;
+      if (loopTimer) window.clearInterval(loopTimer);
+      if (cards) { cards.classList.remove('spin'); void cards.offsetWidth; cards.classList.add('spin'); }
+      txt($('#c9m-state', root), seq[0]);
+      txt($('#c9m-out', root), '循环第 1 步：自我驱动——没有人逼你，是你自己在要求自己。');
+      loopTimer = window.setInterval(function () {
+        i++;
+        if (i >= seq.length) {
+          window.clearInterval(loopTimer); loopTimer = null;
+          txt($('#c9m-state', root), '循环完成');
+          txt($('#c9m-out', root), '自我驱动 → 自我优化 → 自我剥削：一个没有尽头的责任。疲惫成了一种时代性的症状。');
+          return;
+        }
+        txt($('#c9m-state', root), seq[i]);
+        txt($('#c9m-out', root), '循环第 ' + (i + 1) + ' 步：' + seq[i] + '——' + (i === 1 ? '不断地自我优化' : '最后变成自我剥削') + '。');
+      }, 500);
+    });
+  })();
+
+  /* ══════════ 24 · 你的累是哪一种 ══════════ */
+  (function initDiagnose() {
+    var root = $('#cp-c10-diagnose');
+    if (!root) return;
+    var ans = {};
+    var out = $('#c10d-out', root);
+    var REST = {
+      hp: '你是血条型：腿累、想躺下——让身体停下来最直接：躺一会儿、吃点东西、睡一觉。你的累是清晰而局部的。',
+      mp: '你是蓝条型：脑子累、想安静——你需要的不是躺下，而是安静：走路、慢跑、洗个热水澡、在没有信息输入的地方发呆。让身体动起来，反而能让大脑静下来。',
+      mix: '混合型：既耗了身体也耗了心神。先把决定变少，再让身体动起来——两条条要分开补。'
+    };
+    $$('.chip.o', root).forEach(function (c) {
+      on(c, 'click', function () {
+        var q = c.getAttribute('data-q');
+        $$('.chip.o[data-q="' + q + '"]', root).forEach(function (o) {
+          var sel = o === c;
+          o.classList.toggle('is-on', sel);
+          o.setAttribute('aria-pressed', sel ? 'true' : 'false');
+        });
+        ans[q] = c.getAttribute('data-v');
+        var hp = 0, mp = 0;
+        Object.keys(ans).forEach(function (k) { if (ans[k] === 'hp') hp++; else mp++; });
+        bar($('#c10d-hp', root), hp / 3 * 100); bar($('#c10d-mp', root), mp / 3 * 100);
+        txt($('#c10d-hpv', root), hp); txt($('#c10d-mpv', root), mp);
+        var n = Object.keys(ans).length;
+        if (n < 3) {
+          txt(out, '已回答 ' + n + '/3 个问题：不同的累，需要不同的休息。');
+          return;
+        }
+        var body = hp >= 2 ? REST.hp : (mp >= 2 ? REST.mp : REST.mix);
+        txt(out, body + ' 另外注意：刷手机不是休息——拿它来休息，等于把蓝条借给了别人。');
+      });
+    });
+  })();
+
+  /* ══════════ 25 · 用预设省下蓝条 ══════════ */
+  (function initPreset() {
+    var root = $('#cp-c10-preset');
+    if (!root) return;
+    var boxes = $$('#c10p-list input', root), out = $('#c10p-out', root);
+    function render() {
+      var n = 0, save = 0;
+      boxes.forEach(function (b) { if (b.checked) { n++; save += Number(b.getAttribute('data-save') || 0); } });
+      bar($('#c10p-bar', root), save / 80 * 100);
+      txt($('#c10p-bar-v', root), save);
+      var tail = n >= 5
+        ? '把要当场做的决定，提前挪到不累的时候——蓝条短的人，更要善用“预设”来节省资源。'
+        : '这不是软弱，而是让身边的人拿到一份关于你的使用说明。';
+      txt(out, '已预设 ' + n + '/5 项 · 省下 ' + save + ' 点蓝条。' + tail);
+    }
+    boxes.forEach(function (b) { on(b, 'change', render); });
+    render();
+  })();
+
+  /* ══════════ 26 · 二十分钟 ══════════ */
+  (function initRecharge() {
+    var root = $('#cp-c11-recharge');
+    if (!root) return;
+    var t = 0, timer = null;
+    var lines = $$('#c11r-lines li', root);
+    function paint() {
+      var k = Math.pow(t / 20, 0.8);
+      var mp = 8 + (72 - 8) * k;
+      bar($('#c11r-mp', root), mp);
+      txt($('#c11r-mpv', root), Math.round(mp));
+      txt($('#c11r-clock', root), '第 ' + t + ' 分钟');
+      lines.forEach(function (li) { li.classList.toggle('is-in', Number(li.getAttribute('data-at')) <= t); });
+      if (t === 0) txt($('#c11r-out', root), '还没开始。窗外是一条窄窄的巷子，有人骑车经过，铃声清脆。');
+      else if (t < 20) txt($('#c11r-out', root), '第 ' + t + ' 分钟 · 蓝条恢复到 ' + Math.round(mp) + '。没有解释、没有决策、没有说话。');
+      else txt($('#c11r-out', root), '第 20 分钟 · 蓝条 72。那格熟悉的蓝，从很深的地方缓缓地涨了上来。');
+    }
+    on($('#c11r-go', root), 'click', function () {
+      if (timer) window.clearInterval(timer);
+      t = 0; paint();
+      timer = window.setInterval(function () {
+        t++;
+        paint();
+        if (t >= 20) { window.clearInterval(timer); timer = null; }
+      }, 160);
+    });
+    on($('#c11r-reset', root), 'click', function () {
+      if (timer) { window.clearInterval(timer); timer = null; }
+      t = 0; paint();
+    });
+    paint();
+  })();
+
+  /* ══════════ 27 · 说出下半句 ══════════ */
+  (function initClose() {
+    var root = $('#cp-c11-close');
+    if (!root) return;
+    var out = $('#c11c-out', root);
+    $$('#c11c-opts .y', root).forEach(function (b) {
+      on(b, 'click', function () {
+        $$('#c11c-opts .y', root).forEach(function (o) { o.classList.toggle('is-on', o === b); });
+        txt(out, '我累了。' + b.getAttribute('data-say'));
+      });
+    });
+  })();
+})();
+
+</script>
+</body>
+</html>
